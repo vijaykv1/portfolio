@@ -2,13 +2,18 @@ import { Briefcase, GraduationCap } from "lucide-react";
 import FadeUp from "../components/FadeUp";
 
 /* ── Data ─────────────────────────────────────────────────── */
+const FILTER_DEFAULT = "opacity-80 dark:brightness-0 dark:invert dark:opacity-50";
+
 const experience = [
   {
     company: "BMW Group",
     location: "Munich, Germany",
     role: "Test Architect / Solutions Architect",
     period: "Oct. 2022 — Present",
-    logoPath: "/logos/bmw.png",
+    logoPath: "/logos/BMW_GRP.svg",
+    logoFilter: FILTER_DEFAULT,
+    // BMW_GRP.svg renders 212×150 (1.41:1): at h-16(64px) → width=90px; w-32 aligns left-edge with rest
+    logoContainerClass: "w-32 h-16",
     bullets: [
       "Improved legacy test infrastructure for enhanced stability and scalability across high-demand projects.",
       "Designed and developed cloud-based applications to streamline testing across multiple automotive projects.",
@@ -29,6 +34,9 @@ const experience = [
     role: "Visualization Test Architect",
     period: "Sept. 2017 — Sept. 2022",
     logoPath: "/logos/continental.png",
+    logoFilter: FILTER_DEFAULT,
+    // Continental PNG is 1094×200 (5.47:1): cap width at 112px → renders 112×20px
+    logoContainerClass: "w-28 h-9",
     bullets: [
       "Analysed requirements and designed test strategies for visualization features.",
       "Developed and maintained test automation pipelines integrated with CI frameworks for nightly builds and reporting.",
@@ -45,6 +53,9 @@ const experience = [
     role: "Research Assistant",
     period: "Apr. 2016 — Nov. 2016",
     logoPath: "/logos/tuc.png",
+    logoFilter: FILTER_DEFAULT,
+    // TUC PNG is 1024×668 (1.53:1 landscape): at h-20(80px) → width=122px fits in w-32(128px)
+    logoContainerClass: "w-32 h-20",
     bullets: [
       "Integrated Microsoft Kinect v1 & v2 for skeletal tracking and human body stream extraction in the AssiSt rehabilitation project.",
       "Developed a secure networking toolbox (server/client, data encoding/decoding) for data transfer in the open-source XPCV computer vision platform.",
@@ -56,6 +67,9 @@ const experience = [
     role: "Embedded Software Engineer",
     period: "May 2011 — Sept. 2014",
     logoPath: "/logos/pace.png",
+    logoFilter: FILTER_DEFAULT,
+    // Pace PNG is 444×224 (1.98:1): at h-10(40px) → width=79px; w-32 aligns left-edge with TUC
+    logoContainerClass: "w-32 h-10",
     bullets: [
       "Contributed to SDK API development and managed release cycles.",
       "Designed and implemented a UI Test Harness Suite (TCTH) and an Electronic Program Guide (EPG) display system.",
@@ -75,6 +89,9 @@ const education = [
     degree: "MSc. Embedded Systems",
     period: "Oct. 2014 — Sept. 2017",
     logoPath: "/logos/tuc.png",
+    logoFilter: FILTER_DEFAULT,
+    // TUC PNG 1024×668 landscape: at h-20(80px) → width=122px fits in w-32(128px)
+    logoContainerClass: "w-32 h-20",
     details:
       "Specialised in Machine Learning, Digital and 3D Image Processing in Embedded Systems, TV and Video Processing, and the Design of Heterogeneous Systems.",
     thesis:
@@ -85,7 +102,10 @@ const education = [
     location: "Coimbatore, India",
     degree: "BTech. Electronics & Communication Engineering",
     period: "July 2007 — April 2011",
-    logoPath: "/logos/amrita.png",
+    logoPath: "/logos/amrita.svg",
+    logoFilter: FILTER_DEFAULT,
+    // Amrita SVG viewBox 440.81×113.56 (3.88:1): at w-32(128px) → height=33px; h-9 gives room
+    logoContainerClass: "w-32 h-9",
     details:
       "Specialised in Digital Signal Processing, Electronics, and Embedded Software Design & Development.",
     thesis:
@@ -217,7 +237,7 @@ export default function ExperiencePage() {
               delay={i * 90}
             >
               {/* Header */}
-              <div className="flex items-start justify-between gap-4 mb-0.5">
+              <div className="flex items-center justify-between gap-4 mb-0.5">
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                     {job.company}
@@ -227,11 +247,11 @@ export default function ExperiencePage() {
                   </span>
                 </div>
                 {job.logoPath && (
-                  <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                  <div className={`shrink-0 flex items-center justify-center ${job.logoContainerClass ?? "w-20 h-11"}`}>
                     <img
                       src={job.logoPath}
                       alt={job.company}
-                      className="h-9 w-auto max-w-[180px] object-contain"
+                      className={`max-w-full max-h-full w-auto h-auto ${job.logoFilter ?? FILTER_DEFAULT}`}
                     />
                   </div>
                 )}
@@ -282,7 +302,7 @@ export default function ExperiencePage() {
             delay={i * 90}
           >
             {/* Header */}
-            <div className="flex items-start justify-between gap-4 mb-0.5">
+            <div className="flex items-center justify-between gap-4 mb-0.5">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                   {edu.institution}
@@ -292,11 +312,11 @@ export default function ExperiencePage() {
                 </span>
               </div>
               {edu.logoPath && (
-                <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                <div className={`shrink-0 flex items-center justify-center ${edu.logoContainerClass ?? "w-20 h-11"}`}>
                   <img
                     src={edu.logoPath}
                     alt={edu.institution}
-                    className="h-9 w-auto max-w-[180px] object-contain"
+                    className={`max-w-full max-h-full w-auto h-auto ${edu.logoFilter ?? FILTER_DEFAULT}`}
                   />
                 </div>
               )}
