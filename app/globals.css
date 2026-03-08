@@ -123,12 +123,12 @@ body {
 .name-shimmer {
   background: linear-gradient(
     105deg,
-    #52525b 0%,
-    #52525b 30%,
-    #ffffff 45%,
-    #f4f4f5 52%,
-    #52525b 65%,
-    #52525b 100%
+    #3f3f46 0%,
+    #3f3f46 30%,
+    #ffffff 46%,
+    #f4f4f5 54%,
+    #3f3f46 70%,
+    #3f3f46 100%
   );
   background-size: 300% 100%;
   background-clip: text;

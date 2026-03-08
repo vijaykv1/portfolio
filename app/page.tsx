@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, Shield, Brain, Cloud } from "lucide-react";
 
 /* ── Data ─────────────────────────────────────────────────── */
 const roles = [
@@ -19,9 +19,27 @@ const skills = [
   "Automotive Software", "GitHub Actions", "Ansible",
 ];
 
+const focuses = [
+  {
+    icon: Shield,
+    title: "Test Architecture",
+    desc: "Enterprise QA frameworks and CI/CD pipelines running at scale globally.",
+  },
+  {
+    icon: Brain,
+    title: "AI & NLP Systems",
+    desc: "LLM-powered test generation, NLP validation, and AI-driven orchestration.",
+  },
+  {
+    icon: Cloud,
+    title: "Cloud & DevOps",
+    desc: "AWS, Docker, Kubernetes, Pulumi — cloud-native platforms at BMW Group.",
+  },
+];
+
 /* ── Page ─────────────────────────────────────────────────── */
 export default function Home() {
-  const [roleIdx, setRoleIdx] = useState(0);
+  const [roleIdx,   setRoleIdx]   = useState(0);
   const [roleClass, setRoleClass] = useState("role-in");
 
   useEffect(() => {
@@ -60,6 +78,11 @@ export default function Home() {
           -webkit-text-fill-color: transparent;
           animation: shimmer 3.5s ease-in-out infinite;
         }
+        @keyframes glow-pulse {
+          0%, 100% { box-shadow: 0 0 4px 1px #22c55e88; }
+          50%       { box-shadow: 0 0 8px 3px #22c55ecc; }
+        }
+        .dot-glow { animation: glow-pulse 2s ease-in-out infinite; }
       `}</style>
 
       {/* ── Background orbs ─────────────────────────────── */}
@@ -88,17 +111,17 @@ export default function Home() {
         </div>
 
         {/* Greeting */}
-        <p className="fade-up-2 text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-2 tracking-wide">
+        <p className="fade-up-2 text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-3 tracking-wide">
           Hi, I&apos;m
         </p>
 
-        {/* Name with shimmer */}
-        <h1 className="fade-up-2 name-shimmer text-6xl font-bold tracking-tight mb-4 leading-tight">
-          Varun Vijaykumar
+        {/* Two-line name */}
+        <h1 className="fade-up-2 name-shimmer text-[4.5rem] sm:text-8xl font-bold tracking-tight leading-[1] pb-1 mb-5">
+          Varun<br />Vijaykumar
         </h1>
 
         {/* Cycling role */}
-        <div className="fade-up-3 mb-6 flex items-center gap-3">
+        <div className="fade-up-3 mb-5 flex items-center gap-3">
           <span className="text-zinc-400 dark:text-zinc-500 text-lg">—</span>
           <span
             key={roleIdx}
@@ -109,14 +132,14 @@ export default function Home() {
         </div>
 
         {/* Bio */}
-        <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-10">
+        <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-8">
           I build the systems that keep software honest — test infrastructure,
           AI validation pipelines, and cloud platforms running at scale across
           BMW Group globally.
         </p>
 
         {/* CTAs */}
-        <div className="fade-up-5 flex flex-wrap items-center gap-3">
+        <div className="fade-up-5 flex flex-wrap items-center gap-3 mb-8">
           <Link
             href="/Experience"
             className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 dark:bg-zinc-100 px-5 py-2.5 text-sm font-medium text-zinc-100 dark:text-zinc-900 transition-all hover:scale-105 hover:bg-zinc-700 dark:hover:bg-white active:scale-95"
@@ -131,11 +154,37 @@ export default function Home() {
             Get in touch
           </Link>
         </div>
+
+        {/* Currently at */}
+        <div className="fade-up-5 inline-flex items-center gap-2.5 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-4 py-2">
+          <span className="dot-glow h-1.5 w-1.5 rounded-full bg-green-500" />
+          <span className="text-xs text-zinc-400 dark:text-zinc-500">Currently at</span>
+          <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
+          <span className="text-zinc-300 dark:text-zinc-600 text-xs">·</span>
+          <span className="text-xs text-zinc-400 dark:text-zinc-500">13+ yrs experience</span>
+        </div>
+      </section>
+
+      {/* ── Focus areas ─────────────────────────────────── */}
+      <section className="relative px-8 pb-12 max-w-4xl">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {focuses.map(({ icon: Icon, title, desc }) => (
+            <div
+              key={title}
+              className="rounded-2xl border border-zinc-100 dark:border-zinc-800/60 bg-white/30 dark:bg-zinc-900/20 backdrop-blur-sm px-5 py-5 transition-colors hover:border-zinc-200 dark:hover:border-zinc-700"
+            >
+              <div className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800/80">
+                <Icon size={15} className="text-zinc-600 dark:text-zinc-400" />
+              </div>
+              <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 mb-1.5">{title}</p>
+              <p className="text-xs text-zinc-400 dark:text-zinc-500 leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ── Skills marquee ──────────────────────────────── */}
-      <section className="relative py-8 overflow-hidden">
-        {/* fade edges */}
+      <section className="relative py-6 overflow-hidden">
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
           style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
