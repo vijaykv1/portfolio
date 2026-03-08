@@ -1,5 +1,4 @@
 import { GraduationCap } from "lucide-react";
-import CompanyLogo from "../components/CompanyLogo";
 
 const experience = [
   {
@@ -7,9 +6,7 @@ const experience = [
     location: "Munich, Germany",
     role: "Test Architect / Solutions Architect",
     period: "Oct. 2022 — Present",
-    domain: "bmwgroup.com",
-    initials: "BMW",
-    badgeBg: "bg-blue-700",
+    logoPath: "/logos/bmw.png",
     bullets: [
       "Improved legacy test infrastructure for enhanced stability and scalability across high-demand projects.",
       "Designed and developed cloud-based applications to streamline testing across multiple automotive projects.",
@@ -29,9 +26,7 @@ const experience = [
     location: "Ulm, Germany",
     role: "Visualization Test Architect",
     period: "Sept. 2017 — Sept. 2022",
-    domain: "continental.com",
-    initials: "CAG",
-    badgeBg: "bg-orange-600",
+    logoPath: "/logos/continental.png",
     bullets: [
       "Analysed requirements and designed test strategies for visualization features.",
       "Developed and maintained test automation pipelines integrated with CI frameworks for nightly builds and reporting.",
@@ -47,9 +42,7 @@ const experience = [
     location: "Chemnitz, Germany",
     role: "Research Assistant",
     period: "Apr. 2016 — Nov. 2016",
-    domain: "tu-chemnitz.de",
-    initials: "TUC",
-    badgeBg: "bg-emerald-700",
+    logoPath: "/logos/tuc.png",
     bullets: [
       "Integrated Microsoft Kinect v1 & v2 for skeletal tracking and human body stream extraction in the AssiSt rehabilitation project.",
       "Developed a secure networking toolbox (server/client, data encoding/decoding) for data transfer in the open-source XPCV computer vision platform.",
@@ -60,9 +53,7 @@ const experience = [
     location: "Bengaluru, India",
     role: "Embedded Software Engineer",
     period: "May 2011 — Sept. 2014",
-    domain: "pace.com",
-    initials: "PM",
-    badgeBg: "bg-teal-700",
+    logoPath: "/logos/pace.png",
     bullets: [
       "Contributed to SDK API development and managed release cycles.",
       "Designed and implemented a UI Test Harness Suite (TCTH) and an Electronic Program Guide (EPG) display system.",
@@ -81,9 +72,7 @@ const education = [
     location: "Chemnitz, Germany",
     degree: "MSc. Embedded Systems",
     period: "Oct. 2014 — Sept. 2017",
-    domain: "tu-chemnitz.de",
-    initials: "TUC",
-    badgeBg: "bg-emerald-700",
+    logoPath: "/logos/tuc.png",
     details:
       "Specialised in Machine Learning, Digital and 3D Image Processing in Embedded Systems, TV and Video Processing, and the Design of Heterogeneous Systems.",
     thesis:
@@ -94,9 +83,7 @@ const education = [
     location: "Coimbatore, India",
     degree: "BTech. Electronics & Communication Engineering",
     period: "July 2007 — April 2011",
-    domain: "amrita.edu",
-    initials: "ASE",
-    badgeBg: "bg-rose-700",
+    logoPath: "/logos/amrita.png",
     details:
       "Specialised in Digital Signal Processing, Electronics, and Embedded Software Design & Development.",
     thesis:
@@ -114,24 +101,34 @@ export default function ExperiencePage() {
 
       {/* Professional Experience */}
       <div className="relative">
-        {/* Vertical line — starts below first badge, ends above last */}
-        <div className="absolute left-5 top-12 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
+        <div className="absolute left-1.5 top-3 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
 
         <div className="flex flex-col gap-10">
           {experience.map((job, i) => (
-            <div key={i} className="flex gap-5">
-              {/* Company logo */}
-              <div className="relative z-10 shrink-0">
-                <CompanyLogo domain={job.domain} initials={job.initials} badgeBg={job.badgeBg} />
+            <div key={i} className="flex gap-6">
+              {/* Timeline dot */}
+              <div className="relative z-10 mt-1.5 shrink-0">
+                <div className="h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600 ring-2 ring-white dark:ring-zinc-950" />
               </div>
 
               {/* Content */}
-              <div className="pb-2 min-w-0">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-0.5">
-                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                    {job.company}
-                  </h2>
-                  <span className="text-sm text-zinc-500 dark:text-zinc-400">{job.location}</span>
+              <div className="pb-2 min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4 mb-0.5">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                      {job.company}
+                    </h2>
+                    <span className="text-sm text-zinc-500 dark:text-zinc-400">{job.location}</span>
+                  </div>
+                  {job.logoPath && (
+                    <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                      <img
+                        src={job.logoPath}
+                        alt={job.company}
+                        className="h-9 w-auto max-w-[180px] object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
                   <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
@@ -162,23 +159,34 @@ export default function ExperiencePage() {
       </h2>
 
       <div className="relative">
-        <div className="absolute left-5 top-12 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
+        <div className="absolute left-1.5 top-3 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
 
         <div className="flex flex-col gap-8">
           {education.map((edu, i) => (
-            <div key={i} className="flex gap-5">
-              {/* Institution logo */}
-              <div className="relative z-10 shrink-0">
-                <CompanyLogo domain={edu.domain} initials={edu.initials} badgeBg={edu.badgeBg} />
+            <div key={i} className="flex gap-6">
+              {/* Timeline dot */}
+              <div className="relative z-10 mt-1.5 shrink-0">
+                <div className="h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600 ring-2 ring-white dark:ring-zinc-950" />
               </div>
 
               {/* Content */}
-              <div className="pb-2 min-w-0">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-0.5">
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                    {edu.institution}
-                  </h3>
-                  <span className="text-sm text-zinc-500 dark:text-zinc-400">{edu.location}</span>
+              <div className="pb-2 min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4 mb-0.5">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                      {edu.institution}
+                    </h3>
+                    <span className="text-sm text-zinc-500 dark:text-zinc-400">{edu.location}</span>
+                  </div>
+                  {edu.logoPath && (
+                    <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                      <img
+                        src={edu.logoPath}
+                        alt={edu.institution}
+                        className="h-9 w-auto max-w-[180px] object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                   <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
