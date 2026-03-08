@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Mail, MapPin, Coffee } from "lucide-react";
 
-const FORMSPREE_ID = "xvzwgway";
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
