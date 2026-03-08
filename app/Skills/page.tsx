@@ -1,3 +1,5 @@
+import FadeUp from "../components/FadeUp";
+
 const skillGroups = [
   {
     category: "Languages",
@@ -55,15 +57,24 @@ const languages = [
 export default function SkillsPage() {
   return (
     <div className="p-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-2 py-4">Skills</h1>
-      <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-10">
+      {/* ── Header ── */}
+      <h1
+        className="text-3xl font-bold mb-2 py-4"
+        style={{ animation: "fade-up 0.6s ease both 0.05s" }}
+      >
+        Skills
+      </h1>
+      <p
+        className="text-zinc-500 dark:text-zinc-400 text-sm mb-10"
+        style={{ animation: "fade-up 0.6s ease both 0.15s" }}
+      >
         Technologies, tools, and practices I work with.
       </p>
 
-      {/* Skill groups */}
+      {/* ── Skill groups ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-        {skillGroups.map((group) => (
-          <div key={group.category}>
+        {skillGroups.map((group, i) => (
+          <FadeUp key={group.category} delay={i * 60}>
             <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-3">
               {group.category}
             </h2>
@@ -71,43 +82,45 @@ export default function SkillsPage() {
               {group.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="text-sm px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
+                  className="text-sm px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 transition-colors hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-700"
                 >
                   {skill}
                 </span>
               ))}
             </div>
-          </div>
+          </FadeUp>
         ))}
       </div>
 
-      {/* Certifications */}
-      <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Certifications</h2>
+      {/* ── Certifications ── */}
+      <FadeUp>
+        <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Certifications</h2>
+      </FadeUp>
       <div className="flex flex-col gap-3 mb-16">
-        {certifications.map((cert) => (
-          <div
-            key={cert.name}
-            className="flex items-center justify-between rounded-lg border border-zinc-200 dark:border-zinc-800 px-4 py-3"
-          >
-            <span className="text-sm text-zinc-700 dark:text-zinc-300">{cert.name}</span>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
-              {cert.year}
-            </span>
-          </div>
+        {certifications.map((cert, i) => (
+          <FadeUp key={cert.name} delay={i * 70}>
+            <div className="flex items-center justify-between rounded-lg border border-zinc-200 dark:border-zinc-800 px-4 py-3 transition-colors hover:border-zinc-300 dark:hover:border-zinc-700">
+              <span className="text-sm text-zinc-700 dark:text-zinc-300">{cert.name}</span>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
+                {cert.year}
+              </span>
+            </div>
+          </FadeUp>
         ))}
       </div>
 
-      {/* Languages */}
-      <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Languages</h2>
+      {/* ── Languages ── */}
+      <FadeUp>
+        <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Languages</h2>
+      </FadeUp>
       <div className="flex flex-wrap gap-3">
-        {languages.map((l) => (
-          <div
-            key={l.lang}
-            className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-700 px-4 py-2"
-          >
-            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{l.lang}</span>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500">{l.level}</span>
-          </div>
+        {languages.map((l, i) => (
+          <FadeUp key={l.lang} delay={i * 60}>
+            <div className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-700 px-4 py-2 transition-colors hover:border-zinc-300 dark:hover:border-zinc-600">
+              <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{l.lang}</span>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500">{l.level}</span>
+            </div>
+          </FadeUp>
         ))}
       </div>
     </div>

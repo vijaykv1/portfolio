@@ -1,4 +1,5 @@
-import { GraduationCap } from "lucide-react";
+import { Briefcase, GraduationCap } from "lucide-react";
+import FadeUp from "../components/FadeUp";
 
 /* ── Data ─────────────────────────────────────────────────── */
 const experience = [
@@ -106,17 +107,19 @@ function TimelineRow({
   period,
   isLast,
   isPresent,
+  delay = 0,
   children,
 }: {
   period: string;
   isLast: boolean;
   isPresent: boolean;
+  delay?: number;
   children: React.ReactNode;
 }) {
   const { start, end } = parseYears(period);
 
   return (
-    <div className="flex">
+    <FadeUp delay={delay} className="flex">
       {/* ── Year range column — both years cluster tightly at dot level ── */}
       <div className="w-20 shrink-0 flex flex-col items-end pr-5 select-none">
         {/* Spacer pushes year labels to align with the dot (mt-0.5 matches dot mt-1) */}
@@ -164,7 +167,7 @@ function TimelineRow({
 
       {/* ── Content ── */}
       <div className="pl-5 pb-12 flex-1 min-w-0">{children}</div>
-    </div>
+    </FadeUp>
   );
 }
 
@@ -172,8 +175,17 @@ function TimelineRow({
 export default function ExperiencePage() {
   return (
     <div className="p-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-2 py-4">Experience</h1>
-      <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-10">
+      <h1
+        className="text-3xl font-bold mb-2 py-4 flex items-center gap-2"
+        style={{ animation: "fade-up 0.6s ease both 0.05s" }}
+      >
+        <Briefcase className="w-7 h-7 text-zinc-500 dark:text-zinc-400" />
+        Experience
+      </h1>
+      <p
+        className="text-zinc-500 dark:text-zinc-400 text-sm mb-10"
+        style={{ animation: "fade-up 0.6s ease both 0.15s" }}
+      >
         13+ years across embedded systems, automotive, cloud QA, and AI-driven
         validation.
       </p>
@@ -188,6 +200,7 @@ export default function ExperiencePage() {
               period={job.period}
               isLast={i === experience.length - 1}
               isPresent={isPresent}
+              delay={i * 90}
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-4 mb-0.5">
@@ -238,10 +251,12 @@ export default function ExperiencePage() {
       </div>
 
       {/* ── Education ── */}
-      <h2 className="text-2xl font-bold mt-8 mb-8 flex items-center gap-2">
-        <GraduationCap className="w-6 h-6 text-zinc-500 dark:text-zinc-400" />
-        Education
-      </h2>
+      <FadeUp>
+        <h2 className="text-2xl font-bold mt-8 mb-8 flex items-center gap-2">
+          <GraduationCap className="w-6 h-6 text-zinc-500 dark:text-zinc-400" />
+          Education
+        </h2>
+      </FadeUp>
 
       <div className="flex flex-col">
         {education.map((edu, i) => (
@@ -250,6 +265,7 @@ export default function ExperiencePage() {
             period={edu.period}
             isLast={i === education.length - 1}
             isPresent={false}
+            delay={i * 90}
           >
             {/* Header */}
             <div className="flex items-start justify-between gap-4 mb-0.5">
