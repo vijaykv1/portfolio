@@ -156,12 +156,13 @@ export default function Home() {
         </div>
 
         {/* Currently at */}
-        <div className="fade-up-5 inline-flex items-center gap-2.5 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-4 py-2">
-          <span className="dot-glow h-1.5 w-1.5 rounded-full bg-green-500" />
-          <span className="text-xs text-zinc-400 dark:text-zinc-500">Currently at</span>
-          <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
-          <span className="text-zinc-300 dark:text-zinc-600 text-xs">·</span>
-          <span className="text-xs text-zinc-400 dark:text-zinc-500">13+ yrs experience</span>
+        <div className="fade-up-5 inline-flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-5 py-2.5">
+          <span className="dot-glow h-2 w-2 rounded-full bg-green-500" />
+          <span className="text-sm text-zinc-400 dark:text-zinc-500">Currently at</span>
+          <img src="/logos/bmwgroup.svg" alt="BMW Group" className="h-5 w-auto" />
+          <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
+          <span className="text-zinc-300 dark:text-zinc-600 text-sm">·</span>
+          <span className="text-sm text-zinc-400 dark:text-zinc-500">13+ yrs experience</span>
         </div>
       </section>
 
