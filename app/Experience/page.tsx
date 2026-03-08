@@ -107,16 +107,21 @@ function TimelineRow({
   period,
   isLast,
   isPresent,
+  isActive = false,
+  activeConnector = false,
   delay = 0,
   children,
 }: {
   period: string;
   isLast: boolean;
   isPresent: boolean;
+  isActive?: boolean;
+  activeConnector?: boolean;
   delay?: number;
   children: React.ReactNode;
 }) {
   const { start, end } = parseYears(period);
+  const dotGreen = isPresent || isActive;
 
   return (
     <FadeUp delay={delay} className="flex">
@@ -127,7 +132,7 @@ function TimelineRow({
           {/* End year / "Now" */}
           <span
             className={`text-xs font-semibold tabular-nums leading-none ${
-              isPresent
+              dotGreen
                 ? "text-green-500"
                 : "text-zinc-600 dark:text-zinc-300"
             }`}
@@ -155,13 +160,17 @@ function TimelineRow({
       <div className="flex flex-col items-center w-6 shrink-0">
         <div
           className={`mt-1 h-3 w-3 rounded-full shrink-0 z-10 ring-2 ring-white dark:ring-zinc-950 ${
-            isPresent
+            dotGreen
               ? "bg-green-500"
               : "bg-zinc-400 dark:bg-zinc-600"
           }`}
         />
         {!isLast && (
-          <div className="w-px flex-1 bg-zinc-200 dark:bg-zinc-800 mt-1" />
+          <div className={`w-px flex-1 mt-1 ${
+            activeConnector
+              ? "bg-green-400 dark:bg-green-600"
+              : "bg-zinc-200 dark:bg-zinc-800"
+          }`} />
         )}
       </div>
 
@@ -194,12 +203,17 @@ export default function ExperiencePage() {
       <div className="flex flex-col">
         {experience.map((job, i) => {
           const isPresent = job.period.includes("Present");
+          // Green connector line only from BMW (0) down to Continental (1).
+          const activeConnector = i === 0;
+          const isActive = false;
           return (
             <TimelineRow
               key={i}
               period={job.period}
               isLast={i === experience.length - 1}
               isPresent={isPresent}
+              isActive={isActive}
+              activeConnector={activeConnector}
               delay={i * 90}
             >
               {/* Header */}
