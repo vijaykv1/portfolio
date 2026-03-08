@@ -78,12 +78,17 @@ export default function ContactPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6 py-4">Contact</h1>
+      <h1
+        className="text-3xl font-bold mb-6 py-4"
+        style={{ animation: "fade-up 0.6s ease both 0.05s" }}
+      >
+        Contact
+      </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <DecorativePanel />
 
-        <div>
+        <div style={{ animation: "fade-up 0.6s ease both 0.28s" }}>
           {state === "success" ? (
             <div className="flex flex-col gap-2 py-10">
               <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
