@@ -1,5 +1,6 @@
 import { GraduationCap } from "lucide-react";
 
+/* ── Data ─────────────────────────────────────────────────── */
 const experience = [
   {
     company: "BMW Group",
@@ -91,117 +92,204 @@ const education = [
   },
 ];
 
+/* ── Helpers ──────────────────────────────────────────────── */
+function parseYears(period: string): { start: string; end: string } {
+  const [startRaw, endRaw] = period.split("—").map((s) => s.trim());
+  const start = startRaw.split(" ").pop() ?? "";
+  const end =
+    endRaw === "Present" ? "Present" : (endRaw.split(" ").pop() ?? "");
+  return { start, end };
+}
+
+/* ── Timeline row ─────────────────────────────────────────── */
+function TimelineRow({
+  period,
+  isLast,
+  isPresent,
+  children,
+}: {
+  period: string;
+  isLast: boolean;
+  isPresent: boolean;
+  children: React.ReactNode;
+}) {
+  const { start, end } = parseYears(period);
+
+  return (
+    <div className="flex">
+      {/* ── Year range column — both years cluster tightly at dot level ── */}
+      <div className="w-20 shrink-0 flex flex-col items-end pr-5 select-none">
+        {/* Spacer pushes year labels to align with the dot (mt-0.5 matches dot mt-1) */}
+        <div className="mt-0.5 flex flex-col items-end gap-0.5">
+          {/* End year / "Now" */}
+          <span
+            className={`text-xs font-semibold tabular-nums leading-none ${
+              isPresent
+                ? "text-green-500"
+                : "text-zinc-600 dark:text-zinc-300"
+            }`}
+          >
+            {isPresent ? "Now" : end}
+          </span>
+
+          {/* Separator dash */}
+          {start !== end && (
+            <span className="text-[9px] leading-none text-zinc-300 dark:text-zinc-700 select-none">
+              ─
+            </span>
+          )}
+
+          {/* Start year */}
+          {start !== end && (
+            <span className="text-[11px] tabular-nums leading-none text-zinc-400 dark:text-zinc-500">
+              {start}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* ── Dot + vertical connector ── */}
+      <div className="flex flex-col items-center w-6 shrink-0">
+        <div
+          className={`mt-1 h-3 w-3 rounded-full shrink-0 z-10 ring-2 ring-white dark:ring-zinc-950 ${
+            isPresent
+              ? "bg-green-500"
+              : "bg-zinc-400 dark:bg-zinc-600"
+          }`}
+        />
+        {!isLast && (
+          <div className="w-px flex-1 bg-zinc-200 dark:bg-zinc-800 mt-1" />
+        )}
+      </div>
+
+      {/* ── Content ── */}
+      <div className="pl-5 pb-12 flex-1 min-w-0">{children}</div>
+    </div>
+  );
+}
+
+/* ── Page ─────────────────────────────────────────────────── */
 export default function ExperiencePage() {
   return (
     <div className="p-8 max-w-4xl">
       <h1 className="text-3xl font-bold mb-2 py-4">Experience</h1>
       <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-10">
-        13+ years across embedded systems, automotive, cloud QA, and AI-driven validation.
+        13+ years across embedded systems, automotive, cloud QA, and AI-driven
+        validation.
       </p>
 
-      {/* Professional Experience */}
-      <div className="relative">
-        <div className="absolute left-1.5 top-3 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
-
-        <div className="flex flex-col gap-10">
-          {experience.map((job, i) => (
-            <div key={i} className="flex gap-6">
-              {/* Timeline dot */}
-              <div className="relative z-10 mt-1.5 shrink-0">
-                <div className="h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600 ring-2 ring-white dark:ring-zinc-950" />
-              </div>
-
-              {/* Content */}
-              <div className="pb-2 min-w-0 flex-1">
-                <div className="flex items-start justify-between gap-4 mb-0.5">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                      {job.company}
-                    </h2>
-                    <span className="text-sm text-zinc-500 dark:text-zinc-400">{job.location}</span>
+      {/* ── Professional Experience ── */}
+      <div className="flex flex-col">
+        {experience.map((job, i) => {
+          const isPresent = job.period.includes("Present");
+          return (
+            <TimelineRow
+              key={i}
+              period={job.period}
+              isLast={i === experience.length - 1}
+              isPresent={isPresent}
+            >
+              {/* Header */}
+              <div className="flex items-start justify-between gap-4 mb-0.5">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                    {job.company}
+                  </h2>
+                  <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                    {job.location}
+                  </span>
+                </div>
+                {job.logoPath && (
+                  <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                    <img
+                      src={job.logoPath}
+                      alt={job.company}
+                      className="h-9 w-auto max-w-[180px] object-contain"
+                    />
                   </div>
-                  {job.logoPath && (
-                    <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
-                      <img
-                        src={job.logoPath}
-                        alt={job.company}
-                        className="h-9 w-auto max-w-[180px] object-contain"
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
-                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                    {job.role}
-                  </span>
-                  <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
-                    {job.period}
-                  </span>
-                </div>
-                <ul className="flex flex-col gap-1.5">
-                  {job.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-400 dark:bg-zinc-600" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
+
+              {/* Role + period badge */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
+                <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                  {job.role}
+                </span>
+                <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
+                  {job.period}
+                </span>
+              </div>
+
+              {/* Bullets */}
+              <ul className="flex flex-col gap-1.5">
+                {job.bullets.map((b, j) => (
+                  <li
+                    key={j}
+                    className="flex gap-2 text-sm text-zinc-600 dark:text-zinc-400"
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </TimelineRow>
+          );
+        })}
       </div>
 
-      {/* Education */}
-      <h2 className="text-2xl font-bold mt-16 mb-8 flex items-center gap-2">
+      {/* ── Education ── */}
+      <h2 className="text-2xl font-bold mt-8 mb-8 flex items-center gap-2">
         <GraduationCap className="w-6 h-6 text-zinc-500 dark:text-zinc-400" />
         Education
       </h2>
 
-      <div className="relative">
-        <div className="absolute left-1.5 top-3 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
-
-        <div className="flex flex-col gap-8">
-          {education.map((edu, i) => (
-            <div key={i} className="flex gap-6">
-              {/* Timeline dot */}
-              <div className="relative z-10 mt-1.5 shrink-0">
-                <div className="h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600 ring-2 ring-white dark:ring-zinc-950" />
+      <div className="flex flex-col">
+        {education.map((edu, i) => (
+          <TimelineRow
+            key={i}
+            period={edu.period}
+            isLast={i === education.length - 1}
+            isPresent={false}
+          >
+            {/* Header */}
+            <div className="flex items-start justify-between gap-4 mb-0.5">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                  {edu.institution}
+                </h3>
+                <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                  {edu.location}
+                </span>
               </div>
-
-              {/* Content */}
-              <div className="pb-2 min-w-0 flex-1">
-                <div className="flex items-start justify-between gap-4 mb-0.5">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                      {edu.institution}
-                    </h3>
-                    <span className="text-sm text-zinc-500 dark:text-zinc-400">{edu.location}</span>
-                  </div>
-                  {edu.logoPath && (
-                    <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
-                      <img
-                        src={edu.logoPath}
-                        alt={edu.institution}
-                        className="h-9 w-auto max-w-[180px] object-contain"
-                      />
-                    </div>
-                  )}
+              {edu.logoPath && (
+                <div className="shrink-0 rounded-lg bg-white px-3 py-1.5 shadow-sm border border-zinc-100 dark:border-zinc-700">
+                  <img
+                    src={edu.logoPath}
+                    alt={edu.institution}
+                    className="h-9 w-auto max-w-[180px] object-contain"
+                  />
                 </div>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
-                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                    {edu.degree}
-                  </span>
-                  <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
-                    {edu.period}
-                  </span>
-                </div>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-1">{edu.details}</p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-500 italic">{edu.thesis}</p>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
+
+            {/* Degree + period badge */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+              <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                {edu.degree}
+              </span>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
+                {edu.period}
+              </span>
+            </div>
+
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-1">
+              {edu.details}
+            </p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-500 italic">
+              {edu.thesis}
+            </p>
+          </TimelineRow>
+        ))}
       </div>
     </div>
   );
