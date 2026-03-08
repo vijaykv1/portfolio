@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, ChevronRight } from "lucide-react";
+import { MapPin, ArrowRight } from "lucide-react";
 
 /* ── Data ─────────────────────────────────────────────────── */
 const roles = [
@@ -155,34 +155,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Divider ─────────────────────────────────────── */}
-      <div className="mx-8 max-w-4xl border-t border-zinc-100 dark:border-zinc-800/60 my-2" />
-
-      {/* ── Quick nav ───────────────────────────────────── */}
-      <section className="relative px-8 py-8 max-w-4xl">
-        <div className="flex flex-col divide-y divide-zinc-100 dark:divide-zinc-800/60">
-          {[
-            { href: "/Experience", label: "Experience", sub: "BMW Group · Continental AG · and more" },
-            { href: "/Skills",     label: "Skills",     sub: "AWS · AI/NLP · Computer Vision · Test Architecture" },
-            { href: "/Contact",    label: "Contact",    sub: "Let's build something together" },
-          ].map(({ href, label, sub }) => (
-            <Link
-              key={href}
-              href={href}
-              className="group flex items-center justify-between py-4 transition-colors hover:opacity-70"
-            >
-              <div>
-                <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{label}</p>
-                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">{sub}</p>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-zinc-300 dark:text-zinc-600 transition-transform group-hover:translate-x-1"
-              />
-            </Link>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
