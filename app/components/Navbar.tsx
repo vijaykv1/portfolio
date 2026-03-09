@@ -53,7 +53,7 @@ const Navbar = () => {
         style={{
           position: "fixed",
           top:    "0.75rem",
-          left:   "0.75rem",
+          left:   "max(0.75rem, calc((100vw - 64rem) / 2))",
           margin: 0,
           display: "flex",
           alignItems: "baseline",
