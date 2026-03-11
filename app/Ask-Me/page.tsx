@@ -6,7 +6,7 @@ import { Send, Bot, WifiOff, RotateCcw } from "lucide-react";
 /*
  * Herald API contract (FastAPI backend):
  *
- *   POST /chat
+ *   POST /ai/ask
  *   Body:     { "message": string, "session_id": string }
  *   Response: { "response": string }
  *
@@ -115,7 +115,7 @@ export default function AskMePage() {
       }
 
       try {
-        const res = await fetch(`${API_BASE}/chat`, {
+        const res = await fetch(`${API_BASE}/ai/ask`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: trimmed, session_id: sessionId }),
