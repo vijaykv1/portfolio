@@ -6,9 +6,9 @@
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 
-const GITHUB_URL   = "https://github.com/YOUR_USERNAME";     // ← update
-const LINKEDIN_URL = "https://linkedin.com/in/YOUR_PROFILE"; // ← update
-const EMAIL        = "your@email.com";                       // ← update
+const GITHUB_URL   = "https://github.com/vijaykv1";
+const LINKEDIN_URL = "www.linkedin.com/in/varunvijaykumar";
+const EMAIL        = "varun.vijaykumar75@hotmail.com";
 
 const socials = [
   { icon: Github,   href: GITHUB_URL,       label: "GitHub"   },

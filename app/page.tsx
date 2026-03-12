@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, Shield, Brain, Cloud } from "lucide-react";
+import { MapPin, ArrowRight, Shield, Brain, Cloud, Sparkles } from "lucide-react";
 
 /* ── Data ─────────────────────────────────────────────────── */
 const roles = [
@@ -83,6 +83,11 @@ export default function Home() {
           50%       { box-shadow: 0 0 8px 3px #22c55ecc; }
         }
         .dot-glow { animation: glow-pulse 2s ease-in-out infinite; }
+        @keyframes herald-glow {
+          0%, 100% { box-shadow: 0 0 8px 2px #7c3aed55, 0 0 20px 4px #6d28d922; }
+          50%       { box-shadow: 0 0 14px 4px #7c3aedaa, 0 0 30px 8px #6d28d944; }
+        }
+        .herald-btn { animation: herald-glow 2.5s ease-in-out infinite; }
       `}</style>
 
       {/* ── Background orbs ─────────────────────────────── */}
@@ -153,16 +158,27 @@ export default function Home() {
           >
             Get in touch
           </Link>
+          <Link
+            href="/Ask-Me"
+            className="herald-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95"
+          >
+            <Sparkles size={14} />
+            Ask me!
+          </Link>
         </div>
 
-        {/* Currently at */}
-        <div className="fade-up-5 inline-flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-5 py-2.5">
-          <span className="dot-glow h-2 w-2 rounded-full bg-green-500" />
-          <span className="text-sm text-zinc-400 dark:text-zinc-500">Currently at</span>
-          <img src="/logos/bmwgroup.svg" alt="BMW Group" className="h-5 w-auto" />
-          <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
-          <span className="text-zinc-300 dark:text-zinc-600 text-sm">·</span>
-          <span className="text-sm text-zinc-400 dark:text-zinc-500">13+ yrs experience</span>
+        {/* Currently at + experience */}
+        <div className="fade-up-5 flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-5 py-2.5">
+            <span className="dot-glow h-2 w-2 rounded-full bg-green-500" />
+            <span className="text-sm text-zinc-400 dark:text-zinc-500">Currently working at</span>
+            <img src="/logos/bmwgroup.svg" alt="BMW Group" className="h-5 w-auto" />
+            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-4 py-2.5">
+            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">13+</span>
+            <span className="text-sm text-zinc-400 dark:text-zinc-500">yrs industry experience</span>
+          </div>
         </div>
       </section>
 

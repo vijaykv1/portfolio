@@ -1,8 +1,50 @@
+import {
+  SiPython, SiCplusplus, SiGnubash, SiAnsible,
+  SiJenkins, SiCmake, SiBazel, SiGithubactions, SiDocker, SiKubernetes, SiGit,
+  SiPulumi,
+  SiOpengl, SiOpencv,
+  SiSwagger, SiPostman, SiDiagramsdotnet,
+  SiConfluence, SiJira, SiAtlassian,
+  SiLinux, SiMacos,
+} from "react-icons/si";
+import { Cloud, Code2, Award } from "lucide-react";
 import FadeUp from "../components/FadeUp";
+
+const skillIcons: Record<string, React.ReactElement> = {
+  // Programming Languages
+  Python: <SiPython />,
+  "C++": <SiCplusplus />,
+  "Shell Scripts": <SiGnubash />,
+  Ansible: <SiAnsible />,
+  // Build & CI
+  Jenkins: <SiJenkins />,
+  CMake: <SiCmake />,
+  Bazel: <SiBazel />,
+  "GitHub Actions": <SiGithubactions />,
+  Docker: <SiDocker />,
+  Kubernetes: <SiKubernetes />,
+  Git: <SiGit />,
+  // Cloud
+  "IaC — Pulumi": <SiPulumi />,
+  // Computer Vision & Graphics
+  OpenGL: <SiOpengl />,
+  OpenCV: <SiOpencv />,
+  // Architecture & API Design
+  Swagger: <SiSwagger />,
+  Postman: <SiPostman />,
+  DrawIO: <SiDiagramsdotnet />,
+  // Agile & Collaboration
+  Confluence: <SiConfluence />,
+  Jira: <SiJira />,
+  "Atlassian Suite": <SiAtlassian />,
+  // Operating Systems
+  Linux: <SiLinux />,
+  macOS: <SiMacos />,
+};
 
 const skillGroups = [
   {
-    category: "Languages",
+    category: "Programming Languages",
     skills: ["Python", "C++", "Shell Scripts", "Ansible"],
   },
   {
@@ -40,10 +82,30 @@ const skillGroups = [
 ];
 
 const certifications = [
-  { name: "AWS Solutions Architect — Associate", year: "2025" },
-  { name: "AWS Developer — Associate", year: "2025" },
-  { name: "Professional Scrum Product Owner I & II (PSPO)", year: "2024" },
-  { name: "ISTQB Certified Tester — Foundation Level", year: "2020" },
+  {
+    name: "AWS Solutions Architect — Associate",
+    year: "2025",
+    icon: <Cloud className="w-5 h-5 text-[#FF9900]" />,
+    iconBg: "bg-amber-500/10",
+  },
+  {
+    name: "AWS Developer — Associate",
+    year: "2025",
+    icon: <Code2 className="w-5 h-5 text-[#FF9900]" />,
+    iconBg: "bg-amber-500/10",
+  },
+  {
+    name: "Professional Scrum Product Owner I & II (PSPO)",
+    year: "2024",
+    icon: <Award className="w-5 h-5 text-violet-500" />,
+    iconBg: "bg-violet-500/10",
+  },
+  {
+    name: "ISTQB Certified Tester — Foundation Level",
+    year: "2020",
+    icon: <Award className="w-5 h-5 text-blue-500" />,
+    iconBg: "bg-blue-500/10",
+  },
 ];
 
 const languages = [
@@ -82,8 +144,11 @@ export default function SkillsPage() {
               {group.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="text-sm px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 transition-colors hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  className="flex items-center gap-1.5 text-sm px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 transition-colors hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-700"
                 >
+                  {skillIcons[skill] && (
+                    <span className="text-base leading-none">{skillIcons[skill]}</span>
+                  )}
                   {skill}
                 </span>
               ))}
@@ -100,8 +165,13 @@ export default function SkillsPage() {
         {certifications.map((cert, i) => (
           <FadeUp key={cert.name} delay={i * 70}>
             <div className="flex items-center justify-between rounded-lg border border-zinc-200 dark:border-zinc-800 px-4 py-3 transition-colors hover:border-zinc-300 dark:hover:border-zinc-700">
-              <span className="text-sm text-zinc-700 dark:text-zinc-300">{cert.name}</span>
-              <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-3">
+                <div className={`flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${cert.iconBg}`}>
+                  {cert.icon}
+                </div>
+                <span className="text-sm text-zinc-700 dark:text-zinc-300">{cert.name}</span>
+              </div>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full ml-3 shrink-0">
                 {cert.year}
               </span>
             </div>

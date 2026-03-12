@@ -1,4 +1,5 @@
-import { Briefcase, GraduationCap } from "lucide-react";
+import Link from "next/link";
+import { Briefcase, GraduationCap, MessageCircle } from "lucide-react";
 import FadeUp from "../components/FadeUp";
 
 /* ── Data ─────────────────────────────────────────────────── */
@@ -341,6 +342,22 @@ export default function ExperiencePage() {
           </TimelineRow>
         ))}
       </div>
+
+      {/* ── Ask Me CTA ── */}
+      <FadeUp>
+        <div className="mt-6 flex flex-col items-center gap-4 py-10 border-t border-zinc-200 dark:border-zinc-800">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+            Have more questions about my background or experience?
+          </p>
+          <Link
+            href="/Ask-Me"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium hover:opacity-80 transition-opacity"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Ask Me!
+          </Link>
+        </div>
+      </FadeUp>
     </div>
   );
 }
