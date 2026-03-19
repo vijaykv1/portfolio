@@ -134,8 +134,7 @@ export default function Home() {
         {/* Bio */}
         <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-8">
           I build the systems that keep software honest — test infrastructure,
-          AI validation pipelines, and cloud platforms running at scale across
-          BMW Group globally.
+          AI validation pipelines, and cloud platforms at scale.
         </p>
 
         {/* CTAs */}
