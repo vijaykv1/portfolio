@@ -8,7 +8,7 @@ import FadeUp from "../components/FadeUp";
  *  `link` – optional public URL
  *  `repo` – optional GitHub URL
  * ─────────────────────────────────────────────────────────────────────── */
-const projects = [
+const projects: Project[] = [
   {
     title: "Herald",
     description:
@@ -19,7 +19,13 @@ const projects = [
 ];
 
 /* ── Types ─────────────────────────────────────────────────── */
-type Project = (typeof projects)[number];
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+  repo?: string;
+};
 
 /* ── Project card ──────────────────────────────────────────── */
 function ProjectCard({ project, delay }: { project: Project; delay: number }) {
@@ -33,9 +39,9 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
             {project.title}
           </h2>
           <div className="flex items-center gap-2 shrink-0">
-            {"repo" in project && project.repo && (
+            {project.repo && (
               <a
-                href={project.repo as string}
+                href={project.repo}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
@@ -44,9 +50,9 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
                 <Github className="w-4 h-4" />
               </a>
             )}
-            {"link" in project && project.link && (
+            {project.link && (
               <a
-                href={project.link as string}
+                href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
