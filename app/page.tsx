@@ -116,7 +116,7 @@ export default function Home() {
         </p>
 
         {/* Two-line name */}
-        <h1 className="fade-up-2 name-shimmer text-[4.5rem] sm:text-8xl font-bold tracking-tight leading-[1] pb-1 mb-5">
+        <h1 className="fade-up-2 name-shimmer text-[2.75rem] min-[380px]:text-[3.5rem] sm:text-[4.5rem] lg:text-8xl font-bold tracking-tight leading-[1] pb-1 mb-5">
           Varun<br />Vijaykumar
         </h1>
 
@@ -134,8 +134,7 @@ export default function Home() {
         {/* Bio */}
         <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-8">
           I build the systems that keep software honest — test infrastructure,
-          AI validation pipelines, and cloud platforms running at scale across
-          BMW Group globally.
+          AI validation pipelines, and cloud platforms at scale.
         </p>
 
         {/* CTAs */}
