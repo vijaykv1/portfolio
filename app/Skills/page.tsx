@@ -118,7 +118,6 @@ const languages = [
   { lang: "German", level: "Intermediate" },
   { lang: "Hindi", level: "Native" },
   { lang: "Malayalam", level: "Native" },
-  { lang: "Tamil", level: "Native" },
 ];
 
 export default function SkillsPage() {
