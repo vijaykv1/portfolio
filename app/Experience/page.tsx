@@ -146,7 +146,7 @@ function TimelineRow({
   return (
     <FadeUp delay={delay} className="flex">
       {/* ── Year range column — both years cluster tightly at dot level ── */}
-      <div className="w-20 shrink-0 flex flex-col items-end pr-5 select-none">
+      <div className="w-14 sm:w-20 shrink-0 flex flex-col items-end pr-3 sm:pr-5 select-none">
         {/* Spacer pushes year labels to align with the dot (mt-0.5 matches dot mt-1) */}
         <div className="mt-0.5 flex flex-col items-end gap-0.5">
           {/* End year / "Now" */}
@@ -203,7 +203,7 @@ function TimelineRow({
 /* ── Page ─────────────────────────────────────────────────── */
 export default function ExperiencePage() {
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 sm:p-8 max-w-4xl">
       <h1
         className="text-3xl font-bold mb-2 py-4 flex items-center gap-2"
         style={{ animation: "fade-up 0.6s ease both 0.05s" }}
@@ -247,7 +247,7 @@ export default function ExperiencePage() {
                   </span>
                 </div>
                 {job.logoPath && (
-                  <div className={`shrink-0 flex items-center justify-center ${job.logoContainerClass ?? "w-20 h-11"}`}>
+                  <div className={`hidden sm:flex shrink-0 items-center justify-center ${job.logoContainerClass ?? "w-20 h-11"}`}>
                     <img
                       src={job.logoPath}
                       alt={job.company}
@@ -312,7 +312,7 @@ export default function ExperiencePage() {
                 </span>
               </div>
               {edu.logoPath && (
-                <div className={`shrink-0 flex items-center justify-center ${edu.logoContainerClass ?? "w-20 h-11"}`}>
+                <div className={`hidden sm:flex shrink-0 items-center justify-center ${edu.logoContainerClass ?? "w-20 h-11"}`}>
                   <img
                     src={edu.logoPath}
                     alt={edu.institution}
