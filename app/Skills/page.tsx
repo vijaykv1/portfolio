@@ -7,7 +7,7 @@ import {
   SiConfluence, SiJira, SiAtlassian,
   SiLinux, SiMacos,
 } from "react-icons/si";
-import { Cloud, Code2, Award } from "lucide-react";
+import { Award } from "lucide-react";
 import FadeUp from "../components/FadeUp";
 
 const skillIcons: Record<string, React.ReactElement> = {
@@ -85,14 +85,14 @@ const certifications = [
   {
     name: "AWS Solutions Architect — Associate",
     year: "2025",
-    icon: <Cloud className="w-5 h-5 text-[#FF9900]" />,
-    iconBg: "bg-amber-500/10",
+    icon: <img src="/logos/SA_associate.png" alt="AWS Solutions Architect" className="w-8 h-8 object-contain" />,
+    iconBg: "bg-transparent",
   },
   {
     name: "AWS Developer — Associate",
     year: "2025",
-    icon: <Code2 className="w-5 h-5 text-[#FF9900]" />,
-    iconBg: "bg-amber-500/10",
+    icon: <img src="/logos/developer_associate.png" alt="AWS Developer" className="w-8 h-8 object-contain" />,
+    iconBg: "bg-transparent",
   },
   {
     name: "Professional Scrum Product Owner I & II (PSPO)",
