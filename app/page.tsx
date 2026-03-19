@@ -188,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* ── Skills marquee ──────────────────────────────── */}
-      <section className="relative py-6 overflow-hidden">
+      <section className="relative py-6 overflow-hidden" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
           style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
