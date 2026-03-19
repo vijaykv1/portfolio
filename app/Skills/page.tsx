@@ -115,7 +115,7 @@ const certifications = [
 
 const languages = [
   { lang: "English", level: "Fluent" },
-  { lang: "German", level: "Professional" },
+  { lang: "German", level: "Intermediate" },
   { lang: "Hindi", level: "Native" },
   { lang: "Malayalam", level: "Native" },
   { lang: "Tamil", level: "Native" },
