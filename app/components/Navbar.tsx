@@ -9,7 +9,6 @@ const NavigationItems = [
   ["Experience", "/Experience"],
   ["Projects",   "/Projects"  ],
   ["Skills",     "/Skills"    ],
-  ["Ask Me!",    "/Ask-Me"    ],
   ["Contact",    "/Contact"   ],
 ];
 
