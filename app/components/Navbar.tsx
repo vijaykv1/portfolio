@@ -45,7 +45,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── Brand pill — fixed top-left ── */}
+      {/* ── Brand pill — fixed top-left, hidden below lg ── */}
+      <div className="hidden lg:block">
       <Link
         href="/"
         className={["navbar select-none", scrolled ? "navbar-scrolled" : ""].join(" ")}
@@ -54,7 +55,6 @@ const Navbar = () => {
           top:    "0.75rem",
           left:   "max(0.75rem, calc((100vw - 64rem) / 2))",
           margin: 0,
-          display: "flex",
           alignItems: "baseline",
           fontWeight: 700,
           fontSize: "0.875rem",
@@ -92,6 +92,7 @@ const Navbar = () => {
           ijaykumar
         </span>
       </Link>
+      </div>
 
       {/* ── Nav pill — centered ── */}
       <nav
