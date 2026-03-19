@@ -7,7 +7,6 @@ import {
   SiConfluence, SiJira, SiAtlassian,
   SiLinux, SiMacos,
 } from "react-icons/si";
-import { Cloud, Code2, Award } from "lucide-react";
 import FadeUp from "../components/FadeUp";
 
 const skillIcons: Record<string, React.ReactElement> = {
@@ -85,26 +84,32 @@ const certifications = [
   {
     name: "AWS Solutions Architect — Associate",
     year: "2025",
-    icon: <Cloud className="w-5 h-5 text-[#FF9900]" />,
-    iconBg: "bg-amber-500/10",
+    icon: <img src="/logos/SA_associate.png" alt="AWS Solutions Architect" className="w-14 h-14 object-contain" />,
   },
   {
     name: "AWS Developer — Associate",
     year: "2025",
-    icon: <Code2 className="w-5 h-5 text-[#FF9900]" />,
-    iconBg: "bg-amber-500/10",
+    icon: <img src="/logos/developer_associate.png" alt="AWS Developer" className="w-14 h-14 object-contain" />,
   },
   {
-    name: "Professional Scrum Product Owner I & II (PSPO)",
+    name: "AWS Cloud Practitioner — Foundational",
     year: "2024",
-    icon: <Award className="w-5 h-5 text-violet-500" />,
-    iconBg: "bg-violet-500/10",
+    icon: <img src="/logos/foundational.png" alt="AWS Cloud Practitioner" className="w-14 h-14 object-contain" />,
+  },
+  {
+    name: "Professional Scrum Product Owner II (PSPO II)",
+    year: "2024",
+    icon: <img src="/logos/pspo.png" alt="PSPO II" className="w-14 h-14 object-contain" />,
+  },
+  {
+    name: "Professional Scrum Product Owner I (PSPO I)",
+    year: "2024",
+    icon: <img src="/logos/pspo_one.png" alt="PSPO I" className="w-14 h-14 object-contain" />,
   },
   {
     name: "ISTQB Certified Tester — Foundation Level",
     year: "2020",
-    icon: <Award className="w-5 h-5 text-blue-500" />,
-    iconBg: "bg-blue-500/10",
+    icon: <img src="/logos/istqb.png" alt="ISTQB" className="w-14 h-14 object-contain" />,
   },
 ];
 
@@ -161,19 +166,15 @@ export default function SkillsPage() {
       <FadeUp>
         <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Certifications</h2>
       </FadeUp>
-      <div className="flex flex-col gap-3 mb-16">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16">
         {certifications.map((cert, i) => (
-          <FadeUp key={cert.name} delay={i * 70}>
-            <div className="flex items-center justify-between rounded-lg border border-zinc-200 dark:border-zinc-800 px-4 py-3 transition-colors hover:border-zinc-300 dark:hover:border-zinc-700">
-              <div className="flex items-center gap-3">
-                <div className={`flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${cert.iconBg}`}>
-                  {cert.icon}
-                </div>
-                <span className="text-sm text-zinc-700 dark:text-zinc-300">{cert.name}</span>
+          <FadeUp key={cert.name} delay={i * 60}>
+            <div className="flex flex-col items-center gap-3 text-center">
+              <div className="w-16 h-16 flex items-center justify-center">{cert.icon}</div>
+              <div>
+                <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-snug">{cert.name}</p>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">{cert.year}</p>
               </div>
-              <span className="text-xs text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full ml-3 shrink-0">
-                {cert.year}
-              </span>
             </div>
           </FadeUp>
         ))}
