@@ -85,25 +85,31 @@ const certifications = [
     name: "AWS Solutions Architect — Associate",
     year: "2025",
     icon: <img src="/logos/SA_associate.png" alt="AWS Solutions Architect" className="w-14 h-14 object-contain" />,
-    iconBg: "bg-transparent",
   },
   {
     name: "AWS Developer — Associate",
     year: "2025",
     icon: <img src="/logos/developer_associate.png" alt="AWS Developer" className="w-14 h-14 object-contain" />,
-    iconBg: "bg-transparent",
   },
   {
-    name: "Professional Scrum Product Owner I & II (PSPO)",
+    name: "AWS Cloud Practitioner — Foundational",
     year: "2024",
-    icon: <img src="/logos/pspo.png" alt="PSPO" className="w-14 h-14 object-contain" />,
-    iconBg: "bg-transparent",
+    icon: <img src="/logos/foundational.png" alt="AWS Cloud Practitioner" className="w-14 h-14 object-contain" />,
+  },
+  {
+    name: "Professional Scrum Product Owner II (PSPO II)",
+    year: "2024",
+    icon: <img src="/logos/pspo.png" alt="PSPO II" className="w-14 h-14 object-contain" />,
+  },
+  {
+    name: "Professional Scrum Product Owner I (PSPO I)",
+    year: "2024",
+    icon: <img src="/logos/pspo_one.png" alt="PSPO I" className="w-14 h-14 object-contain" />,
   },
   {
     name: "ISTQB Certified Tester — Foundation Level",
     year: "2020",
     icon: <img src="/logos/istqb.png" alt="ISTQB" className="w-14 h-14 object-contain" />,
-    iconBg: "bg-transparent",
   },
 ];
 
@@ -160,17 +166,14 @@ export default function SkillsPage() {
       <FadeUp>
         <h2 className="text-xl font-bold mb-6 text-zinc-900 dark:text-zinc-100">Certifications</h2>
       </FadeUp>
-      <div className="flex flex-col mb-16">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16">
         {certifications.map((cert, i) => (
-          <FadeUp key={cert.name} delay={i * 70}>
-            <div className="flex gap-4 pb-6 last:pb-0">
-              <div className="flex flex-col items-center">
-                <div className="w-14 h-14 flex items-center justify-center flex-shrink-0">{cert.icon}</div>
-                {i < certifications.length - 1 && <div className="w-px flex-1 bg-zinc-200 dark:bg-zinc-800 mt-1" />}
-              </div>
-              <div className="pt-2">
-                <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{cert.name}</span>
-                <p className="text-xs text-zinc-400 mt-0.5">{cert.year}</p>
+          <FadeUp key={cert.name} delay={i * 60}>
+            <div className="flex flex-col items-center gap-3 text-center">
+              <div className="w-16 h-16 flex items-center justify-center">{cert.icon}</div>
+              <div>
+                <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-snug">{cert.name}</p>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">{cert.year}</p>
               </div>
             </div>
           </FadeUp>
