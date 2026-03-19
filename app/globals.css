@@ -97,6 +97,13 @@ body::after {
   }
 }
 
+/* ── Hide desktop nav/brand below lg (1024px) ─── */
+@media (max-width: 1023px) {
+  .navbar {
+    display: none !important;
+  }
+}
+
 /* ── Scrolled state ─── */
 .navbar-scrolled {
   padding: 0.25rem 0.625rem;
