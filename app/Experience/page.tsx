@@ -378,6 +378,14 @@ export default function ExperiencePage() {
                 <Sparkles className="w-4 h-4" />
                 Ask Me anything
               </Link>
+              <a
+                href="/api/download-cv"
+                download
+                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
+              >
+                <Download className="w-4 h-4" />
+                Download CV
+              </a>
               <Link
                 href="/Contact"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
