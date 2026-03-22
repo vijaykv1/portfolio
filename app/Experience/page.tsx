@@ -397,7 +397,7 @@ export default function ExperiencePage() {
             className="inline-flex items-center gap-2 text-sm text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
-            Download CV as PDF
+            Download CV
           </a>
         </div>
       </div>
