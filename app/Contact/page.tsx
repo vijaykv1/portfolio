@@ -9,24 +9,24 @@ type FormState = "idle" | "loading" | "success" | "error";
 
 function DecorativePanel() {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950 via-zinc-900 to-indigo-950 p-10 flex flex-col justify-between min-h-[480px]">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-50 via-violet-50 to-indigo-100 dark:from-violet-950 dark:via-zinc-900 dark:to-indigo-950 p-10 flex flex-col justify-between min-h-[480px]">
       {/* Floating decorative circles */}
-      <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-violet-500/10 blur-2xl" />
-      <div className="absolute top-1/3 -left-8 w-32 h-32 rounded-full bg-indigo-500/10 blur-xl" />
-      <div className="absolute -bottom-8 right-1/4 w-40 h-40 rounded-full bg-violet-400/10 blur-2xl" />
-      <div className="absolute top-1/2 right-8 w-4 h-4 rounded-full bg-violet-400/40" />
-      <div className="absolute top-1/4 left-1/3 w-2 h-2 rounded-full bg-indigo-300/40" />
-      <div className="absolute bottom-1/3 left-1/4 w-3 h-3 rounded-full bg-violet-300/30" />
+      <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-violet-300/20 dark:bg-violet-500/10 blur-2xl" />
+      <div className="absolute top-1/3 -left-8 w-32 h-32 rounded-full bg-indigo-300/20 dark:bg-indigo-500/10 blur-xl" />
+      <div className="absolute -bottom-8 right-1/4 w-40 h-40 rounded-full bg-violet-300/20 dark:bg-violet-400/10 blur-2xl" />
+      <div className="absolute top-1/2 right-8 w-4 h-4 rounded-full bg-violet-400/40 dark:bg-violet-400/40" />
+      <div className="absolute top-1/4 left-1/3 w-2 h-2 rounded-full bg-indigo-400/40 dark:bg-indigo-300/40" />
+      <div className="absolute bottom-1/3 left-1/4 w-3 h-3 rounded-full bg-violet-400/30 dark:bg-violet-300/30" />
 
       {/* Top content */}
       <div className="relative z-10">
-        <p className="text-violet-300/80 text-xs font-semibold uppercase tracking-widest mb-3">
+        <p className="text-violet-500 dark:text-violet-300/80 text-xs font-semibold uppercase tracking-widest mb-3">
           Get in touch
         </p>
-        <h2 className="text-3xl font-bold text-white leading-tight mb-4">
+        <h2 className="text-3xl font-bold text-indigo-950 dark:text-white leading-tight mb-4">
           Let&apos;s build something<br />great together.
         </h2>
-        <p className="text-zinc-400 text-sm leading-relaxed">
+        <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
           Whether it&apos;s a project, an opportunity, or just a hello — my inbox is always open.
         </p>
       </div>
@@ -34,22 +34,22 @@ function DecorativePanel() {
       {/* Bottom content */}
       <div className="relative z-10 flex flex-col gap-3 mt-10">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-            <Mail className="w-4 h-4 text-violet-300" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-100 dark:bg-white/10">
+            <Mail className="w-4 h-4 text-violet-600 dark:text-violet-300" />
           </div>
-          <span className="text-zinc-300 text-sm">varun.vijaykumar75@hotmail.com</span>
+          <span className="text-zinc-700 dark:text-zinc-300 text-sm">varun.vijaykumar75@hotmail.com</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-            <MapPin className="w-4 h-4 text-violet-300" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-100 dark:bg-white/10">
+            <MapPin className="w-4 h-4 text-violet-600 dark:text-violet-300" />
           </div>
-          <span className="text-zinc-300 text-sm">Based in Munich, Germany</span>
+          <span className="text-zinc-700 dark:text-zinc-300 text-sm">Based in Munich, Germany</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-            <Coffee className="w-4 h-4 text-violet-300" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-100 dark:bg-white/10">
+            <Coffee className="w-4 h-4 text-violet-600 dark:text-violet-300" />
           </div>
-          <span className="text-zinc-300 text-sm">Open to new opportunities</span>
+          <span className="text-zinc-700 dark:text-zinc-300 text-sm">Open to new opportunities</span>
         </div>
       </div>
     </div>
