@@ -217,7 +217,7 @@ export default function ExperiencePage() {
         <a
           href="/api/download-cv"
           download
-          className="shrink-0 inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
+          className="btn-stripe shrink-0 inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-600 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
           style={{ animation: "fade-up 0.6s ease both 0.05s" }}
         >
           <Download className="w-4 h-4" />
@@ -394,7 +394,7 @@ export default function ExperiencePage() {
           <a
             href="/api/download-cv"
             download
-            className="inline-flex items-center gap-2 text-sm text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+            className="btn-stripe inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-600 px-4 py-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-500 transition-all hover:scale-105 active:scale-95"
           >
             <Download className="w-3.5 h-3.5" />
             Download CV
