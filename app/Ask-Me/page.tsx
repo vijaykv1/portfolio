@@ -33,15 +33,22 @@ function TypingDots() {
   );
 }
 
+/* ── Derive initials from a display name ── */
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 /* ── Message bubble ── */
-function MessageBubble({ msg }: { msg: Message }) {
+function MessageBubble({ msg, userInitials }: { msg: Message; userInitials: string }) {
   const isUser = msg.role === "user";
   return (
     <div className={`flex gap-2.5 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
       <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold ${
         isUser ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900" : "bg-violet-500/15 text-violet-500"
       }`}>
-        {isUser ? "You" : "H"}
+        {isUser ? userInitials : "H"}
       </div>
       <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
         isUser
@@ -138,6 +145,7 @@ function useHeraldSessionId(userId: string | null | undefined) {
 
 /* ── Chat UI ── */
 function ChatUI({ userId, userName }: { userId: string; userName: string }) {
+  const userInitials = getInitials(userName);
   const { sessionId, newSession } = useHeraldSessionId(userId);
   const [messages, setMessages]   = useState<Message[]>([]);
   const [input, setInput]         = useState("");
@@ -262,7 +270,7 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
             </div>
           </div>
         )}
-        {messages.map((msg) => <MessageBubble key={msg.id} msg={msg} />)}
+        {messages.map((msg) => <MessageBubble key={msg.id} msg={msg} userInitials={userInitials} />)}
         {loading && (
           <div className="flex gap-2.5">
             <div className="flex-shrink-0 w-7 h-7 rounded-full bg-violet-500/15 flex items-center justify-center text-[11px] font-bold text-violet-500">H</div>
