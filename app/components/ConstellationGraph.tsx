@@ -241,7 +241,7 @@ export default function ConstellationGraph() {
     let dragVX = 0, dragVY = 0;
 
     function ptrPos(e: { clientX: number; clientY: number }) {
-      const r = wrap.getBoundingClientRect();
+      const r = wrap!.getBoundingClientRect();
       return { px: e.clientX - r.left, py: e.clientY - r.top };
     }
 
