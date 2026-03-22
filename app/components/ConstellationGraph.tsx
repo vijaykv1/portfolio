@@ -234,15 +234,103 @@ export default function ConstellationGraph() {
       attributes: true, attributeFilter: ["class"],
     });
 
-    /* Mouse interaction */
+    /* ── Pointer / drag state ──────────────────────────────────────── */
     let mx = -999, my = -999;
-    const onMove  = (e: MouseEvent) => {
-      const r = wrap.getBoundingClientRect();
-      mx = e.clientX - r.left; my = e.clientY - r.top;
+    let dragNode: NodeData | null = null;
+    let lastDX = 0, lastDY = 0;
+    let dragVX = 0, dragVY = 0;
+
+    function ptrPos(e: { clientX: number; clientY: number }) {
+      const r = wrap!.getBoundingClientRect();
+      return { px: e.clientX - r.left, py: e.clientY - r.top };
+    }
+
+    function hitTest(px: number, py: number) {
+      return nodes.find(n => Math.hypot(n.x - px, n.y - py) < n.r + 14) ?? null;
+    }
+
+    /* Mouse */
+    const onMouseDown = (e: MouseEvent) => {
+      const { px, py } = ptrPos(e);
+      const hit = hitTest(px, py);
+      if (!hit) return;
+      dragNode = hit;
+      lastDX = px; lastDY = py;
+      dragVX = 0; dragVY = 0;
+      hit.vx = 0; hit.vy = 0;
+      e.preventDefault();
     };
-    const onLeave = () => { mx = -999; my = -999; };
-    wrap.addEventListener("mousemove", onMove);
+
+    const onMouseMove = (e: MouseEvent) => {
+      const { px, py } = ptrPos(e);
+      mx = px; my = py;
+      if (dragNode) {
+        dragVX = (px - lastDX) * 0.4;
+        dragVY = (py - lastDY) * 0.4;
+        lastDX = px; lastDY = py;
+        dragNode.x = px;
+        dragNode.y = py;
+        dragNode.vx = 0;
+        dragNode.vy = 0;
+        wrap.style.cursor = "grabbing";
+      } else {
+        wrap.style.cursor = hitTest(px, py) ? "grab" : "default";
+      }
+    };
+
+    const onMouseUp = () => {
+      if (dragNode) {
+        dragNode.vx = Math.max(-1.5, Math.min(1.5, dragVX));
+        dragNode.vy = Math.max(-1.5, Math.min(1.5, dragVY));
+        dragNode = null;
+      }
+      wrap.style.cursor = "";
+    };
+
+    const onLeave = () => { mx = -999; my = -999; if (!dragNode) wrap.style.cursor = ""; };
+
+    /* Touch */
+    const onTouchStart = (e: TouchEvent) => {
+      const { px, py } = ptrPos(e.touches[0]);
+      const hit = hitTest(px, py);
+      if (!hit) return;
+      dragNode = hit;
+      lastDX = px; lastDY = py;
+      dragVX = 0; dragVY = 0;
+      hit.vx = 0; hit.vy = 0;
+      e.preventDefault();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!dragNode) return;
+      const { px, py } = ptrPos(e.touches[0]);
+      mx = px; my = py;
+      dragVX = (px - lastDX) * 0.4;
+      dragVY = (py - lastDY) * 0.4;
+      lastDX = px; lastDY = py;
+      dragNode.x = px;
+      dragNode.y = py;
+      dragNode.vx = 0;
+      dragNode.vy = 0;
+      e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      if (dragNode) {
+        dragNode.vx = Math.max(-1.5, Math.min(1.5, dragVX));
+        dragNode.vy = Math.max(-1.5, Math.min(1.5, dragVY));
+        dragNode = null;
+      }
+      mx = -999; my = -999;
+    };
+
+    wrap.addEventListener("mousedown",  onMouseDown);
+    wrap.addEventListener("mousemove",  onMouseMove);
+    wrap.addEventListener("mouseup",    onMouseUp);
     wrap.addEventListener("mouseleave", onLeave);
+    wrap.addEventListener("touchstart", onTouchStart, { passive: false });
+    wrap.addEventListener("touchmove",  onTouchMove,  { passive: false });
+    wrap.addEventListener("touchend",   onTouchEnd);
 
     /* Animation loop */
     function loop() {
@@ -250,6 +338,16 @@ export default function ConstellationGraph() {
       const w = W(), h = H();
 
       nodes.forEach(n => {
+        /* Dragged node — manually positioned, skip physics */
+        if (n === dragNode) {
+          n.circle.setAttribute("r", String(n.r * 1.9));
+          n.circle.style.filter = `drop-shadow(0 0 20px ${n.style.glow})`;
+          n.text.setAttribute("font-weight", "700");
+          n.text.setAttribute("font-size",   "11.5");
+          n.g.setAttribute("transform", `translate(${n.x},${n.y})`);
+          return;
+        }
+
         n.x += n.vx; n.y += n.vy;
         if (n.x < 10 || n.x > w - 115) n.vx *= -1;
         if (n.y < 10 || n.y > h - 16)  n.vy *= -1;
@@ -269,16 +367,17 @@ export default function ConstellationGraph() {
         n.g.setAttribute("transform", `translate(${n.x},${n.y})`);
       });
 
-      // Repulsion — push nodes apart when they crowd each other
+      /* Repulsion — skip for dragged node */
       for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i] === dragNode) continue;
         for (let j = i + 1; j < nodes.length; j++) {
+          if (nodes[j] === dragNode) continue;
           const ni = nodes[i], nj = nodes[j];
           const dx = ni.x - nj.x, dy = ni.y - nj.y;
           const d  = Math.sqrt(dx * dx + dy * dy) || 0.1;
           if (d < MIN_DIST) {
             const force = (MIN_DIST - d) / MIN_DIST * REPULSION;
-            const fx = (dx / d) * force;
-            const fy = (dy / d) * force;
+            const fx = (dx / d) * force, fy = (dy / d) * force;
             ni.x += fx; ni.y += fy;
             nj.x -= fx; nj.y -= fy;
           }
@@ -289,13 +388,15 @@ export default function ConstellationGraph() {
         line.setAttribute("x1", String(a.x)); line.setAttribute("y1", String(a.y));
         line.setAttribute("x2", String(b.x)); line.setAttribute("y2", String(b.y));
 
+        const isDragging = a === dragNode || b === dragNode;
         const hov =
-          mx !== -999 &&
-          (Math.hypot(a.x - mx, a.y - my) < 32 || Math.hypot(b.x - mx, b.y - my) < 32);
+          isDragging ||
+          (mx !== -999 &&
+            (Math.hypot(a.x - mx, a.y - my) < 32 || Math.hypot(b.x - mx, b.y - my) < 32));
 
         if (hov) {
           line.setAttribute("stroke",       oc(style.line, 1.0));
-          line.setAttribute("stroke-width", "2.8");
+          line.setAttribute("stroke-width", isDragging ? "3.2" : "2.8");
         } else {
           const d  = Math.hypot(a.x - b.x, a.y - b.y);
           const op = Math.max(0.12, (1 - d / CONN_DIST) * style.lineMax);
@@ -314,8 +415,13 @@ export default function ConstellationGraph() {
       timers.forEach(clearTimeout);
       if (ticker) clearInterval(ticker);
       themeObs.disconnect();
-      wrap.removeEventListener("mousemove", onMove);
+      wrap.removeEventListener("mousedown",  onMouseDown);
+      wrap.removeEventListener("mousemove",  onMouseMove);
+      wrap.removeEventListener("mouseup",    onMouseUp);
       wrap.removeEventListener("mouseleave", onLeave);
+      wrap.removeEventListener("touchstart", onTouchStart);
+      wrap.removeEventListener("touchmove",  onTouchMove);
+      wrap.removeEventListener("touchend",   onTouchEnd);
       wrap.innerHTML = "";
     };
   }, []);
