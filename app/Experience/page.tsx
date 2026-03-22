@@ -378,14 +378,6 @@ export default function ExperiencePage() {
                 <Sparkles className="w-4 h-4" />
                 Ask Me anything
               </Link>
-              <a
-                href="/api/download-cv"
-                download
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
-              >
-                <Download className="w-4 h-4" />
-                Download CV
-              </a>
               <Link
                 href="/Contact"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
@@ -396,6 +388,18 @@ export default function ExperiencePage() {
             </div>
           </div>
         </FadeUp>
+
+        {/* Standalone CV download — separate from the CTA box */}
+        <div className="mt-4 flex justify-center">
+          <a
+            href="/api/download-cv"
+            download
+            className="inline-flex items-center gap-2 text-sm text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Download CV as PDF
+          </a>
+        </div>
       </div>
     </>
   );
