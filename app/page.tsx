@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MapPin, ArrowRight, Shield, Brain, Cloud, Sparkles } from "lucide-react";
+import ConstellationGraph from "./components/ConstellationGraph";
 
-/* ── Data ─────────────────────────────────────────────────── */
+/* ── Data ─────────────────────────────────────────────────────────── */
 const roles = [
   "Test Architect",
   "Solutions Architect",
@@ -37,7 +38,25 @@ const focuses = [
   },
 ];
 
-/* ── Page ─────────────────────────────────────────────────── */
+/* Mobile skill pills — colour-coded to match the graph categories */
+const mobilePills = [
+  { label: "Solutions Architect", color: "#6366f1" },
+  { label: "Test Architecture",   color: "#6366f1" },
+  { label: "Quality Lead",        color: "#6366f1" },
+  { label: "AWS",                 color: "#0ea5e9" },
+  { label: "Docker",              color: "#0ea5e9" },
+  { label: "Kubernetes",          color: "#0ea5e9" },
+  { label: "CI/CD",               color: "#0ea5e9" },
+  { label: "AI / NLP",            color: "#a855f7" },
+  { label: "Computer Vision",     color: "#a855f7" },
+  { label: "Python",              color: "#10b981" },
+  { label: "C++",                 color: "#10b981" },
+  { label: "Embedded Systems",    color: "#f59e0b" },
+  { label: "Automotive",          color: "#f59e0b" },
+  { label: "BMW Group",           color: "#f59e0b" },
+];
+
+/* ── Page ─────────────────────────────────────────────────────────── */
 export default function Home() {
   const [roleIdx,   setRoleIdx]   = useState(0);
   const [roleClass, setRoleClass] = useState("role-in");
@@ -85,7 +104,7 @@ export default function Home() {
         .dot-glow { animation: glow-pulse 2s ease-in-out infinite; }
       `}</style>
 
-      {/* ── Background orbs ─────────────────────────────── */}
+      {/* ── Background orbs ───────────────────────────────────────── */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className="orb-1 absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full opacity-[0.07]"
@@ -101,83 +120,116 @@ export default function Home() {
         />
       </div>
 
-      {/* ── Hero ────────────────────────────────────────── */}
-      <section className="relative px-8 pt-16 pb-10 max-w-4xl">
+      {/* ── Hero ──────────────────────────────────────────────────── */}
+      <section className="relative px-6 sm:px-8 pt-16 pb-10
+                          grid grid-cols-1 md:grid-cols-2 md:gap-4 md:items-center
+                          max-w-4xl md:max-w-7xl">
 
-        {/* Location */}
-        <div className="fade-up-1 mb-8 inline-flex items-center gap-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-zinc-900/60 backdrop-blur px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400">
-          <MapPin size={11} />
-          Munich, Germany · Open to global opportunities
-        </div>
+        {/* ── Left column ─────────────────────────────────────────── */}
+        <div className="flex flex-col md:pr-6 min-w-0">
 
-        {/* Greeting */}
-        <p className="fade-up-2 text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-3 tracking-wide">
-          Hi, I&apos;m
-        </p>
-
-        {/* Two-line name */}
-        <h1 className="fade-up-2 name-shimmer text-[2.75rem] min-[380px]:text-[3.5rem] sm:text-[4.5rem] lg:text-8xl font-bold tracking-tight leading-[1] pb-1 mb-5">
-          Varun<br />Vijaykumar
-        </h1>
-
-        {/* Cycling role */}
-        <div className="fade-up-3 mb-5 flex items-center gap-3">
-          <span className="text-zinc-400 dark:text-zinc-500 text-lg">—</span>
-          <span
-            key={roleIdx}
-            className={`${roleClass} text-lg font-medium text-zinc-600 dark:text-zinc-300`}
-          >
-            {roles[roleIdx]}
-          </span>
-        </div>
-
-        {/* Bio */}
-        <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-8">
-          I build the systems that keep software honest — test infrastructure,
-          AI validation pipelines, and cloud platforms at scale.
-        </p>
-
-        {/* CTAs */}
-        <div className="fade-up-5 flex flex-wrap items-center gap-3 mb-8">
-          <Link
-            href="/Experience"
-            className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 dark:bg-zinc-100 px-5 py-2.5 text-sm font-medium text-zinc-100 dark:text-zinc-900 transition-all hover:scale-105 hover:bg-zinc-700 dark:hover:bg-white active:scale-95"
-          >
-            View Experience
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/Contact"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/40 dark:bg-zinc-900/40 backdrop-blur px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
-          >
-            Get in touch
-          </Link>
-          <Link
-            href="/Ask-Me"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95"
-          >
-            <Sparkles size={14} />
-            Ask me!
-          </Link>
-        </div>
-
-        {/* Currently at + experience */}
-        <div className="fade-up-5 flex flex-wrap items-center gap-3">
-          <div className="inline-flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-5 py-2.5">
-            <span className="dot-glow h-2 w-2 rounded-full bg-green-500" />
-            <span className="text-sm text-zinc-400 dark:text-zinc-500">Currently working at</span>
-            <img src="/logos/bmwgroup.svg" alt="BMW Group" className="h-5 w-auto" />
-            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
+          {/* Location */}
+          <div className="fade-up-1 mb-8 inline-flex items-center gap-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-zinc-900/60 backdrop-blur px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400 w-fit">
+            <MapPin size={11} />
+            Munich, Germany · Open to global opportunities
           </div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-4 py-2.5">
-            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">13+</span>
-            <span className="text-sm text-zinc-400 dark:text-zinc-500">yrs industry experience</span>
+
+          {/* Greeting */}
+          <p className="fade-up-2 text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-3 tracking-wide">
+            Hi, I&apos;m
+          </p>
+
+          {/* Name */}
+          <h1 className="fade-up-2 name-shimmer text-[2.75rem] min-[380px]:text-[3.5rem] sm:text-[4.5rem] md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-tight leading-[1] pb-1 mb-5">
+            Varun<br />Vijaykumar
+          </h1>
+
+          {/* Cycling role */}
+          <div className="fade-up-3 mb-5 flex items-center gap-3">
+            <span className="text-zinc-400 dark:text-zinc-500 text-lg">—</span>
+            <span
+              key={roleIdx}
+              className={`${roleClass} text-lg font-medium text-zinc-600 dark:text-zinc-300`}
+            >
+              {roles[roleIdx]}
+            </span>
+          </div>
+
+          {/* Bio */}
+          <p className="fade-up-4 max-w-xl text-base leading-relaxed text-zinc-500 dark:text-zinc-400 mb-8">
+            I build the systems that keep software honest — test infrastructure,
+            AI validation pipelines, and cloud platforms at scale.
+          </p>
+
+          {/* CTAs */}
+          <div className="fade-up-5 flex flex-wrap items-center gap-3 mb-8">
+            <Link
+              href="/Experience"
+              className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 dark:bg-zinc-100 px-5 py-2.5 text-sm font-medium text-zinc-100 dark:text-zinc-900 transition-all hover:scale-105 hover:bg-zinc-700 dark:hover:bg-white active:scale-95"
+            >
+              View Experience
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/Contact"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/40 dark:bg-zinc-900/40 backdrop-blur px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
+            >
+              Get in touch
+            </Link>
+            <Link
+              href="/Ask-Me"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95"
+            >
+              <Sparkles size={14} />
+              Ask me!
+            </Link>
+          </div>
+
+          {/* Currently at + experience */}
+          <div className="fade-up-5 flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-5 py-2.5">
+              <span className="dot-glow h-2 w-2 rounded-full bg-green-500" />
+              <span className="text-sm text-zinc-400 dark:text-zinc-500">Currently working at</span>
+              <img src="/logos/bmwgroup.svg" alt="BMW Group" className="h-5 w-auto" />
+              <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">BMW Group, Munich</span>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 dark:border-zinc-700/60 bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur px-4 py-2.5">
+              <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">13+</span>
+              <span className="text-sm text-zinc-400 dark:text-zinc-500">yrs industry experience</span>
+            </div>
+          </div>
+
+          {/* ── Mobile skill pills (hidden on desktop) ─────────────── */}
+          <div className="md:hidden mt-8 flex flex-wrap gap-2">
+            {mobilePills.map(({ label, color }) => (
+              <span
+                key={label}
+                className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium"
+                style={{
+                  borderColor: color + "55",
+                  color,
+                  background: color + "11",
+                }}
+              >
+                <span
+                  className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: color }}
+                />
+                {label}
+              </span>
+            ))}
           </div>
         </div>
+
+        {/* ── Right column — Constellation graph (desktop only) ───── */}
+        <div className="hidden md:block relative md:h-[420px] lg:h-[500px]">
+          <ConstellationGraph />
+        </div>
+
       </section>
 
-      {/* ── Focus areas ─────────────────────────────────── */}
-      <section className="relative px-8 pb-12 max-w-4xl">
+      {/* ── Focus areas ───────────────────────────────────────────── */}
+      <section className="relative px-6 sm:px-8 pb-12 max-w-4xl">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {focuses.map(({ icon: Icon, title, desc }) => (
             <div
@@ -194,7 +246,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Skills marquee ──────────────────────────────── */}
+      {/* ── Skills marquee ────────────────────────────────────────── */}
       <section className="relative py-6 overflow-hidden" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
           style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
