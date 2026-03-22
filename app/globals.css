@@ -172,6 +172,26 @@ body::after {
 }
 .animate-marquee:hover { animation-play-state: paused; }
 
+/* ── Diagonal stripe button pattern ─────────────── */
+.btn-stripe {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(113, 113, 122, 0.2) 4px,
+    rgba(113, 113, 122, 0.2) 5px
+  );
+}
+.dark .btn-stripe {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(161, 161, 170, 0.12) 4px,
+    rgba(161, 161, 170, 0.12) 5px
+  );
+}
+
 /* ── Gradient shimmer on name ────────────────────── */
 @keyframes shimmer {
   0%   { background-position: 150% center; }
