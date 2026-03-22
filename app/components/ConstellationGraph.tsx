@@ -76,8 +76,10 @@ const LEGEND: { cat: Cat; label: string }[] = [
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
 const NS = "http://www.w3.org/2000/svg";
-const CONN_DIST = 115;
-const SPAWN_MS  = 680;
+const CONN_DIST  = 130;   // max px for drawing connection lines
+const MIN_DIST   = 80;    // repulsion kicks in below this distance
+const REPULSION  = 0.55;  // repulsion strength
+const SPAWN_MS   = 680;
 
 function oc(tpl: string, o: number) {
   return tpl.replace("_", o.toFixed(2));
@@ -210,7 +212,7 @@ export default function ConstellationGraph() {
       if (idx >= KEYWORDS.length || dead) { if (ticker) clearInterval(ticker); return; }
       const anchor = nodes[Math.floor(Math.random() * nodes.length)];
       const ang    = Math.random() * Math.PI * 2;
-      const dist   = 70 + Math.random() * 65;
+      const dist   = 95 + Math.random() * 80;
       spawn(
         KEYWORDS[idx++],
         Math.max(14,  Math.min(W() - 115, anchor.x + Math.cos(ang) * dist)),
@@ -266,6 +268,22 @@ export default function ConstellationGraph() {
         }
         n.g.setAttribute("transform", `translate(${n.x},${n.y})`);
       });
+
+      // Repulsion — push nodes apart when they crowd each other
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const ni = nodes[i], nj = nodes[j];
+          const dx = ni.x - nj.x, dy = ni.y - nj.y;
+          const d  = Math.sqrt(dx * dx + dy * dy) || 0.1;
+          if (d < MIN_DIST) {
+            const force = (MIN_DIST - d) / MIN_DIST * REPULSION;
+            const fx = (dx / d) * force;
+            const fy = (dy / d) * force;
+            ni.x += fx; ni.y += fy;
+            nj.x -= fx; nj.y -= fy;
+          }
+        }
+      }
 
       lines.forEach(({ line, a, b, style }) => {
         line.setAttribute("x1", String(a.x)); line.setAttribute("y1", String(a.y));
