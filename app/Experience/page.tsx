@@ -1,4 +1,4 @@
-import { Briefcase, GraduationCap, Sparkles, Mail } from "lucide-react";
+import { Briefcase, GraduationCap, Sparkles, Mail, Download } from "lucide-react";
 import Link from "next/link";
 import FadeUp from "../components/FadeUp";
 
@@ -206,13 +206,24 @@ export default function ExperiencePage() {
   return (
     <>
     <div className="p-4 sm:p-8 max-w-4xl">
-      <h1
-        className="text-3xl font-bold mb-2 py-4 flex items-center gap-2"
-        style={{ animation: "fade-up 0.6s ease both 0.05s" }}
-      >
-        <Briefcase className="w-7 h-7 text-zinc-500 dark:text-zinc-400" />
-        Experience
-      </h1>
+      <div className="flex items-start justify-between gap-4 py-4 mb-2">
+        <h1
+          className="text-3xl font-bold flex items-center gap-2"
+          style={{ animation: "fade-up 0.6s ease both 0.05s" }}
+        >
+          <Briefcase className="w-7 h-7 text-zinc-500 dark:text-zinc-400" />
+          Experience
+        </h1>
+        <a
+          href="/api/download-cv"
+          download
+          className="shrink-0 inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
+          style={{ animation: "fade-up 0.6s ease both 0.05s" }}
+        >
+          <Download className="w-4 h-4" />
+          Download CV
+        </a>
+      </div>
       <p
         className="text-zinc-500 dark:text-zinc-400 text-sm mb-10"
         style={{ animation: "fade-up 0.6s ease both 0.15s" }}
