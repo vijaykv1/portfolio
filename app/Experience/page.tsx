@@ -367,7 +367,7 @@ export default function ExperiencePage() {
                 The CV only tells half the story.
               </h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                Ask Herald — my AI representative — anything about my work, decisions, or experience.
+                Ask Herald — my AI representative — anything about my work, decisions, or experience. Or just reach out directly!
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
