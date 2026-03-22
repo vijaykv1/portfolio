@@ -320,7 +320,7 @@ export default function AskMePage() {
 
   if (!session?.user) {
     return (
-      <div className="flex flex-col max-w-3xl px-0" style={{ height: "calc(100dvh - 5rem)" }}>
+      <div className="w-full flex items-center justify-center" style={{ minHeight: "calc(100dvh - 5rem)" }}>
         <LoginGate />
       </div>
     );
