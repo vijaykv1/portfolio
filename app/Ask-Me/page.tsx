@@ -74,14 +74,14 @@ function LoginGate() {
     <div className="flex flex-col items-center justify-center flex-1 px-8 py-16" style={{ animation: "fade-up 0.6s ease both 0.1s" }}>
       {/* Memoji avatar */}
       <div className="relative w-24 h-24 mb-6">
-        {/* Violet glow ring */}
-        <div className="absolute inset-0 rounded-full ring-2 ring-violet-500/40 ring-offset-4 ring-offset-[#0d0d14]" />
-        {/* Avatar circle */}
-        <div className="w-full h-full rounded-full overflow-hidden bg-zinc-800/60">
+        {/* Violet glow ring — offset colour matches page bg per mode */}
+        <div className="absolute inset-0 rounded-full ring-2 ring-violet-500/40 ring-offset-4 ring-offset-white dark:ring-offset-[#0d0d14]" />
+        {/* Avatar circle — neutral backing per mode */}
+        <div className="w-full h-full rounded-full overflow-hidden bg-zinc-100 dark:bg-zinc-800/60">
           <img
             src="/memoji.gif"
             alt="Varun's Memoji"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain translate-y-3"
           />
         </div>
       </div>
