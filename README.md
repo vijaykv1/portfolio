@@ -97,37 +97,8 @@ npm start
 
 ---
 
-## Project Structure
-
-```
-app/
-├── components/
-│   ├── ConstellationGraph.tsx   # Interactive SVG knowledge graph
-│   ├── FadeUp.tsx               # Scroll-triggered fade animation
-│   ├── Navbar.tsx               # Responsive nav with glassmorphism
-│   ├── Footer.tsx               # Social links and copyright
-│   └── AuthProvider.tsx         # NextAuth session wrapper
-├── page.tsx                     # Home / About
-├── Experience/page.tsx          # Timeline page
-├── Projects/page.tsx            # Projects showcase
-├── Skills/page.tsx              # Skills + certifications
-├── Ask-Me/page.tsx              # Herald AI chat
-├── Contact/page.tsx             # Contact form
-└── Legal/page.tsx               # Legal
-auth.ts                          # NextAuth config
-middleware.ts                    # Route protection
-```
-
----
-
 ## Deployment
 
 The project deploys to **Vercel** — connect the repo and add environment variables in the Vercel dashboard. The React Compiler is enabled in `next.config.ts` for build-time optimisation.
 
 Herald's AI backend is hosted separately on **Railway**.
-
----
-
-## License
-
-© 2026 Varun Vijaykumar. All rights reserved.
