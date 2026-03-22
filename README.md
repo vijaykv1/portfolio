@@ -1,4 +1,4 @@
-# Varun Vijaykumar — Personal Portfolio
+# Personal Portfolio
 
 A personal portfolio built with **Next.js 16**, featuring an AI chatbot representative (Herald), an interactive constellation knowledge graph, and full dark/light mode support.
 
