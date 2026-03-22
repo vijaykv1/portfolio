@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, ArrowRight, Shield, Brain, Cloud } from "lucide-react";
+import { MapPin, ArrowRight, Shield, Brain, Cloud, Sparkles } from "lucide-react";
 
 /* ── Data ─────────────────────────────────────────────────── */
 const roles = [
@@ -151,6 +151,13 @@ export default function Home() {
             className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/40 dark:bg-zinc-900/40 backdrop-blur px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95"
           >
             Get in touch
+          </Link>
+          <Link
+            href="/Ask-Me"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95"
+          >
+            <Sparkles size={14} />
+            Ask me!
           </Link>
         </div>
 
