@@ -204,6 +204,7 @@ function TimelineRow({
 /* ── Page ─────────────────────────────────────────────────── */
 export default function ExperiencePage() {
   return (
+    <>
     <div className="p-4 sm:p-8 max-w-4xl">
       <h1
         className="text-3xl font-bold mb-2 py-4 flex items-center gap-2"
@@ -343,37 +344,40 @@ export default function ExperiencePage() {
         ))}
       </div>
 
-      {/* ── CTA footer ── */}
-      <FadeUp delay={80}>
-        <div className="mt-16 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="text-center sm:text-left">
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Still have questions?</p>
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-              The CV only tells half the story.
-            </h3>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-              Ask Herald — my AI representative — anything about my work, decisions, or experience.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <Link
-              href="/Ask-Me"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95 whitespace-nowrap"
-            >
-              <Sparkles className="w-4 h-4" />
-              Ask Me anything
-            </Link>
-            <Link
-              href="/Contact"
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
-            >
-              <Mail className="w-4 h-4" />
-              Get in touch
-            </Link>
-          </div>
-        </div>
-      </FadeUp>
+      </div>
 
-    </div>
+      {/* ── CTA footer — outside max-w-4xl so it spans the full layout width ── */}
+      <div className="px-4 sm:px-8 pb-8">
+        <FadeUp delay={80}>
+          <div className="mt-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="text-center sm:text-left">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Still have questions?</p>
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                The CV only tells half the story.
+              </h3>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                Ask Herald — my AI representative — anything about my work, decisions, or experience.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              <Link
+                href="/Ask-Me"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:scale-105 hover:from-violet-500 hover:to-indigo-500 active:scale-95 whitespace-nowrap"
+              >
+                <Sparkles className="w-4 h-4" />
+                Ask Me anything
+              </Link>
+              <Link
+                href="/Contact"
+                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:scale-105 hover:border-zinc-400 dark:hover:border-zinc-500 active:scale-95 whitespace-nowrap"
+              >
+                <Mail className="w-4 h-4" />
+                Get in touch
+              </Link>
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </>
   );
 }
