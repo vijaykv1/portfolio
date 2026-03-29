@@ -152,6 +152,8 @@ function useHeraldSessionId(userId: string | null | undefined) {
   return { sessionId, newSession };
 }
 
+type UsageInfo = { used: number; limit: number; remaining: number };
+
 /* ── Chat UI ── */
 function ChatUI({ userId, userName }: { userId: string; userName: string }) {
   const userInitials = getInitials(userName);
@@ -160,6 +162,7 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
   const [input, setInput]         = useState("");
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState<string | null>(null);
+  const [usage, setUsage]         = useState<UsageInfo | null>(null);
 
   const bottomRef   = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -169,9 +172,20 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
   // Reset visible messages when session changes (new chat)
   useEffect(() => { setMessages([]); setError(null); }, [sessionId]);
 
+  // Fetch today's usage when the component mounts (or user changes)
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`${API_BASE}/ai/usage`, { headers: { "X-User-Id": userId } })
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => { if (data) setUsage(data); })
+      .catch(() => {/* non-fatal */});
+  }, [userId]);
+
+  const limitReached = usage !== null && usage.remaining === 0;
+
   const sendMessage = useCallback(async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || loading || !sessionId) return;
+    if (!trimmed || loading || !sessionId || limitReached) return;
 
     setMessages((prev) => [...prev, { id: genId(), role: "user", text: trimmed }]);
     setInput("");
@@ -182,13 +196,26 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
     try {
       const res = await fetch(`${API_BASE}/ai/ask`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-User-Id": userId,
+        },
         body: JSON.stringify({ message: trimmed, session_id: sessionId }),
       });
+
+      // Quota exceeded
+      if (res.status === 429) {
+        const errData = await res.json().catch(() => ({}));
+        setError(errData?.detail?.message ?? "You've reached your daily message limit. Come back tomorrow!");
+        setUsage((prev) => prev ? { ...prev, remaining: 0 } : null);
+        return;
+      }
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const reply: string = data.response ?? data.message ?? data.answer ?? "…";
       setMessages((prev) => [...prev, { id: genId(), role: "herald", text: reply }]);
+      if (data.usage) setUsage(data.usage);
     } catch (err) {
       setError(err instanceof TypeError
         ? "Herald is offline. Make sure the backend is running."
@@ -198,7 +225,7 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
       setLoading(false);
       textareaRef.current?.focus();
     }
-  }, [loading, sessionId]);
+  }, [loading, sessionId, userId, limitReached]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
@@ -289,25 +316,48 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
         <div ref={bottomRef} />
       </div>
 
+      {/* Limit-reached banner */}
+      {limitReached && (
+        <div className="shrink-0 flex items-center gap-2 mb-3 px-4 py-3 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-sm">
+          <span className="flex-1">You&apos;ve used all {usage?.limit} messages for today. Come back tomorrow!</span>
+        </div>
+      )}
+
       {/* Input bar */}
       <div className="shrink-0 pt-3 border-t border-zinc-200 dark:border-zinc-800" style={{ animation: "fade-up 0.6s ease both 0.3s" }}>
-        <div className="flex items-end gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-900/50 px-4 py-3 focus-within:border-zinc-400 dark:focus-within:border-zinc-500 transition-colors">
+        <div className={`flex items-end gap-2 rounded-2xl border px-4 py-3 transition-colors ${
+          limitReached
+            ? "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/30 opacity-50 cursor-not-allowed"
+            : "border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-900/50 focus-within:border-zinc-400 dark:focus-within:border-zinc-500"
+        }`}>
           <textarea ref={textareaRef} value={input} onChange={handleInput} onKeyDown={handleKeyDown}
-            placeholder="Ask me anything…" rows={1} disabled={loading || !sessionId}
-            className="flex-1 resize-none bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none leading-relaxed disabled:opacity-50"
+            placeholder={limitReached ? "Daily limit reached — come back tomorrow" : "Ask me anything…"}
+            rows={1} disabled={loading || !sessionId || limitReached}
+            className="flex-1 resize-none bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none leading-relaxed disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ maxHeight: "128px", overflowY: "auto" }} />
-          <button onClick={() => sendMessage(input)} disabled={!input.trim() || loading || !sessionId} aria-label="Send message"
+          <button onClick={() => sendMessage(input)} disabled={!input.trim() || loading || !sessionId || limitReached} aria-label="Send message"
             className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 disabled:opacity-30 hover:opacity-75 transition-opacity">
             <Send className="w-3.5 h-3.5" />
           </button>
         </div>
         <div className="flex items-center justify-between mt-2">
           <p className="text-[11px] text-zinc-400 dark:text-zinc-600">Herald may not always be accurate.</p>
-          <button onClick={() => { newSession(); }}
-            className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-600 hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors">
-            <RotateCcw className="w-3 h-3" />
-            New chat
-          </button>
+          <div className="flex items-center gap-3">
+            {usage && (
+              <span className={`text-[11px] tabular-nums ${
+                usage.remaining <= 3
+                  ? "text-amber-500 dark:text-amber-400"
+                  : "text-zinc-400 dark:text-zinc-600"
+              }`}>
+                {usage.remaining}/{usage.limit} messages left today
+              </span>
+            )}
+            <button onClick={() => { newSession(); }}
+              className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-600 hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors">
+              <RotateCcw className="w-3 h-3" />
+              New chat
+            </button>
+          </div>
         </div>
       </div>
     </div>
