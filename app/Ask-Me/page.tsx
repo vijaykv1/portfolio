@@ -6,7 +6,6 @@ import { Send, Bot, WifiOff, RotateCcw, LogOut } from "lucide-react";
 import { SiGoogle, SiGithub } from "react-icons/si";
 
 const API_BASE = process.env.NEXT_PUBLIC_HERALD_API_URL ?? "http://localhost:8000";
-const TOKEN_CTRL_ENABLED = process.env.NEXT_PUBLIC_TOKEN_CTRL_ENABLED === "true";
 
 const SUGGESTED = [
   "What's your professional background?",
@@ -175,14 +174,14 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
 
   // Fetch today's usage when the component mounts (or user changes)
   useEffect(() => {
-    if (!TOKEN_CTRL_ENABLED || !userId) return;
+    if (!userId) return;
     fetch(`${API_BASE}/ai/usage`, { headers: { "X-User-Id": userId } })
       .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setUsage(data); })
       .catch(() => {/* non-fatal */});
   }, [userId]);
 
-  const limitReached = TOKEN_CTRL_ENABLED && usage !== null && usage.remaining === 0;
+  const limitReached = usage !== null && usage.remaining === 0;
 
   const sendMessage = useCallback(async (text: string) => {
     const trimmed = text.trim();
@@ -216,7 +215,7 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
       const data = await res.json();
       const reply: string = data.response ?? data.message ?? data.answer ?? "…";
       setMessages((prev) => [...prev, { id: genId(), role: "herald", text: reply }]);
-      if (TOKEN_CTRL_ENABLED && data.usage) setUsage(data.usage);
+      if (data.usage) setUsage(data.usage);
     } catch (err) {
       setError(err instanceof TypeError
         ? "Herald is offline. Make sure the backend is running."
@@ -350,7 +349,7 @@ function ChatUI({ userId, userName }: { userId: string; userName: string }) {
         <div className="flex items-center justify-between mt-2">
           <p className="text-[11px] text-zinc-400 dark:text-zinc-600">Herald may not always be accurate.</p>
           <div className="flex items-center gap-3">
-            {TOKEN_CTRL_ENABLED && usage && (
+            {usage && (
               <span className={`text-[11px] tabular-nums ${
                 usage.remaining <= 3
                   ? "text-amber-500 dark:text-amber-400"
