@@ -1,14 +1,14 @@
 /**
  * Legal Page for the portfolio website.
  */
-import { Scale, Copyright, Section, MailOpen } from "lucide-react";
+import { Scale, Copyright, Section, MailOpen, Cookie } from "lucide-react";
 
 export default function LegalPage() {
   const sections = [
     {
       title: "Contact Information",
       icon: MailOpen,
-      content: "Name: Varun Vijaykumar\nEmail: example@example.com",
+      content: "Name: Varun Vijaykumar\nEmail: varun.vijaykumar75@outlook.com",
     },
     {
       title: "Liability of Content",
@@ -21,6 +21,12 @@ export default function LegalPage() {
       icon: Scale,
       content:
         "Our offer contains links to external third-party websites, the contents of which we have no influence on. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the pages is always responsible for the contents of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal contents were not recognizable at the time of linking. However, a permanent control of the contents of the linked pages is not reasonable without concrete evidence of a violation of the law. Upon becoming aware of legal violations, we will remove such links immediately.",
+    },
+    {
+      title: "Cookies",
+      icon: Cookie,
+      content:
+        "This website uses a single session cookie solely to enable authentication via Google or GitHub (sign-in functionality). This cookie is strictly necessary for the service to function and does not track you across sites or collect any personal data beyond what is required to maintain your session. No analytics, advertising, or third-party tracking cookies are used.",
     },
     {
       title: "Copyright",
