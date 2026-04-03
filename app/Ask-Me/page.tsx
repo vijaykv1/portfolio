@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import ReactMarkdown from "react-markdown";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Send, Bot, WifiOff, RotateCcw, LogOut } from "lucide-react";
 import { SiGoogle, SiGithub } from "react-icons/si";
@@ -50,12 +51,24 @@ function MessageBubble({ msg, userInitials }: { msg: Message; userInitials: stri
       }`}>
         {isUser ? userInitials : "H"}
       </div>
-      <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+      <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
         isUser
-          ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-tr-sm"
+          ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-tr-sm whitespace-pre-wrap"
           : "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-tl-sm"
       }`}>
-        {msg.text}
+        {isUser ? msg.text : (
+          <ReactMarkdown components={{
+            p:      ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+            ul:     ({ children }) => <ul className="list-disc ml-4 mb-2 space-y-0.5">{children}</ul>,
+            ol:     ({ children }) => <ol className="list-decimal ml-4 mb-2 space-y-0.5">{children}</ol>,
+            li:     ({ children }) => <li>{children}</li>,
+            strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+            em:     ({ children }) => <em className="italic">{children}</em>,
+            code:   ({ children }) => <code className="font-mono text-xs bg-zinc-200 dark:bg-zinc-700 px-1 py-0.5 rounded">{children}</code>,
+          }}>
+            {msg.text}
+          </ReactMarkdown>
+        )}
       </div>
     </div>
   );
