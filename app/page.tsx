@@ -122,7 +122,7 @@ export default function Home() {
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className="relative px-6 sm:px-8 pt-16 pb-10
-                          grid grid-cols-1 md:grid-cols-2 md:gap-4 md:items-center
+                          grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-[3fr_2fr] md:gap-4 md:items-center
                           max-w-4xl md:max-w-7xl">
 
         {/* ── Left column ─────────────────────────────────────────── */}
